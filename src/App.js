@@ -13,7 +13,7 @@ class App extends React.Component {
 
   componentDidMount() {
     measurementService
-      .getAll('kaura')
+      .getAll()
       .then(response => {
         const distinctTags = this.getGroupedBy(response.data, 'tagname')
         this.setState({ measurements1: distinctTags[0], measurements2: distinctTags[1]})

@@ -1,8 +1,7 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/measurements'
 
-const getAll = (tag) => {
-  console.log('tagi: ', tag)
+const getAll = () => {
   return axios.get(baseUrl)
 }
 
