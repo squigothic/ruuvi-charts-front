@@ -1,27 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios'
+import Filter from './components/Filter'
+import AllCountries from './components/AllCountries'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      maat: [],
+      filter: '',
+    }
+  }
+
+  componentDidMount() {
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        console.log(response.data)
+        this.setState({ maat: response.data })
+      })
+  }
+
+  handleFilter = (event) => {
+    console.log(event.target.value)
+    this.setState({ filter: event.target.value})
+  }
+
+  setFilter = (newFilter) => {
+    return () => {
+      this.setState({ filter: newFilter})
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h1>Maa-ohjelma</h1>
+        <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
+        <div>
+          <AllCountries countryList={this.state.maat} filter={this.state.filter} handleClick={this.setFilter} />
+        </div>
       </div>
-    );
+    )
   }
 }
 
