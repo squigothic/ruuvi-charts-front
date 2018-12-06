@@ -6,15 +6,10 @@ const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)
   const humValues = measurements.map(measure => measure.relativehumidity)
   const timestamps = measurements.map(measure => new Date(measure.timestamp * 1000))
-  const hhmm = timestamps.map(date => date.getHours()+':'+('0' + date.getMinutes()).slice(-2))
-
-  console.log(hhmm)
-  
-  console.log('lämpötilat: ', tempValues)
+  const hoursMinutes = timestamps.map(date => date.getHours()+':'+('0' + date.getMinutes()).slice(-2))
 
   const data = {
-    labels: hhmm,
-    //labels: ['mittaus1', 'mittaus2', 'mittaus3', 'mittaus4', 'mittaus5', 'mittaus6', 'mittaus7'],
+    labels: hoursMinutes,
     datasets: [{
       label: 'Lämpötila',
       yAxisID: 'tempAxis',
@@ -52,6 +47,7 @@ const Chart = ({ measurements }) => {
   }
 
   return (
+    //<div className='chartContainer'>
     <div>
       <Line data={ data } options={ options } />
     </div>
