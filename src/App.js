@@ -15,6 +15,7 @@ class App extends React.Component {
     measurementService
       .getAll()
       .then(response => {
+        console.log('response saatu')
         const distinctTags = this.getGroupedBy(response.data, 'tagname')
         this.setState({ measurements1: distinctTags[0], measurements2: distinctTags[1]})
       })
@@ -23,7 +24,6 @@ class App extends React.Component {
   getGroupedBy = (data, key) => {
     let groups = {}
     let result = []
-    console.log(key)
     data.forEach((a) => {
       if (!(a[key] in groups)) {
         groups[a[key]] = []
@@ -35,9 +35,11 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('measurements1: ', this.state.measurements1)
+    console.log('measurements2: ', this.state.measurements2)
     return (
       <div>
-        <h1>Ruuvifrontend</h1>
+        <h1 className='titleCentered'>Ruuvifrontend</h1>
         <Chart measurements={ this.state.measurements1 } />
         <Chart measurements={ this.state.measurements2 } />
       </div >

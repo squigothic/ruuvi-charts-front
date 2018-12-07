@@ -1,7 +1,8 @@
 import axios from 'axios'
-const baseUrl = 'http://127.0.0.1:3001/measurements'
+const baseUrl = 'https://subdomain.marakassi.com/measurements'
 
 const getAll = () => {
+  console.log(`Tehdään pyyntö osoitteeseen ${baseUrl}`)
   return axios.get(baseUrl)
 }
 
