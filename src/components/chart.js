@@ -40,7 +40,11 @@ const Chart = ({ measurements }) => {
         }, {
           type: 'linear',
           position: 'right',
-          id: 'humAxis'
+          id: 'humAxis',
+          ticks: {
+            max:101,
+            min: 80
+          }
         }
       ]
     }
