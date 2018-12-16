@@ -55,8 +55,7 @@ const Chart = ({ measurements }) => {
   }
 
   return (
-    //<div className='chartContainer'>
-    <div>
+    <div className='chartContainer'>
       <Line data={ data } options={ options } />
     </div>
   )

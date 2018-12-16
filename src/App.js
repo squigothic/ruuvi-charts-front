@@ -15,7 +15,6 @@ class App extends React.Component {
     measurementService
       .getAll()
       .then(response => {
-        console.log('response saatu')
         const distinctTags = this.getGroupedBy(response.data, 'tagname')
         this.setState({ measurements1: distinctTags[0], measurements2: distinctTags[1]})
       })
@@ -35,8 +34,8 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('measurements1: ', this.state.measurements1)
-    console.log('measurements2: ', this.state.measurements2)
+    //console.log('measurements1: ', this.state.measurements1)
+    //console.log('measurements2: ', this.state.measurements2)
     return (
       <div>
         <h1 className='titleCentered'>Ruuvifrontend</h1>
