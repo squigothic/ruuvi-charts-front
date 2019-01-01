@@ -37,18 +37,18 @@ const Chart = ({ measurements }) => {
           type: 'linear',
           position: 'left',
           id: 'tempAxis',
-          ticks: {
-            max: 26,
-            min: 19
-          }
+         // ticks: {
+         //   max: 26,
+         //   min: 19
+         // }
         }, {
           type: 'linear',
           position: 'right',
           id: 'humAxis',
-          ticks: {
-            max:101,
-            min: 80
-          }
+         // ticks: {
+         //   max:101,
+         //   min: 80
+         // }
         }
       ]
     }
