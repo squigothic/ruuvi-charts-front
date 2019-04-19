@@ -11,7 +11,7 @@ const App = () => {
     measurementService
       .getAll()
       .then(response => {
-        //console.log('pyyntö onnistui')
+        console.log('pyyntö onnistui')
         const distinctTags = getGroupedBy(response.data, 'tagname')
         setMeasurementsOne(distinctTags[0])
         setMeasurementsTwo(distinctTags[1])
