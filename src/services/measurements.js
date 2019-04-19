@@ -4,7 +4,7 @@ require('dotenv').config()
 const baseUrl = 'https://subdomain.marakassi.com/measurements'
 
 const getAll = () => {
-  console.log(`Tehdään pyyntö osoitteeseen ${baseUrl}`)
+  //console.log(`Tehdään pyyntö osoitteeseen ${baseUrl}`)
   return axios.get(baseUrl)
 }
 

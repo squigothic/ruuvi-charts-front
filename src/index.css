@@ -6,6 +6,10 @@
   margin-right: auto;
 }
 
+.chart {
+  padding-top: 0.1rem;
+}
+
 h1 {
   text-align: center;
 }

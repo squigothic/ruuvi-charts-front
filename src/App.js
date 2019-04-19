@@ -1,26 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import measurementService from './services/measurements'
-import Chart from './components/chart'
+import ChartTitleData from './components/chartTitleData'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      measurements1: [],
-      measurements2: [],
-    }
-  }
+const App = () => {
+  const [measurementsOne, setMeasurementsOne] = useState([])
+  const [measurementsTwo, setMeasurementsTwo] = useState([])
+  const [loaded, setLoaded] = useState(false)
 
-  componentDidMount() {
+  useEffect(() => {
     measurementService
       .getAll()
       .then(response => {
-        const distinctTags = this.getGroupedBy(response.data, 'tagname')
-        this.setState({ measurements1: distinctTags[0], measurements2: distinctTags[1]})
+        //console.log('pyyntö onnistui')
+        const distinctTags = getGroupedBy(response.data, 'tagname')
+        setMeasurementsOne(distinctTags[0])
+        setMeasurementsTwo(distinctTags[1])
+        setLoaded(true)
       })
-  }
+      .catch(err => {
+        console.log('virhe: ', err)
+      })
+  }, [])
 
-  getGroupedBy = (data, key) => {
+  const getGroupedBy = (data, key) => {
     let groups = {}
     let result = []
     data.forEach((a) => {
@@ -33,17 +35,23 @@ class App extends React.Component {
     return result
   }
 
-  render() {
-    //console.log('measurements1: ', this.state.measurements1)
-    //console.log('measurements2: ', this.state.measurements2)
+  // console.log('measurements1: ', measurementsOne)
+  // console.log('measurements2: ', measurementsTwo)
+  if (loaded) {
     return (
       <div>
         <h1 className='titleCentered'>Ruuvifrontend</h1>
-        <Chart measurements={ this.state.measurements1 } />
-        <Chart measurements={ this.state.measurements2 } />
+        <ChartTitleData data={measurementsOne} />
+        <ChartTitleData data={measurementsTwo} />
       </div >
     )
   }
+
+  return (
+    <div>
+      <h1 className='titleCentered'>Ruuvifrontend</h1>
+    </div>
+  )
 }
 
 

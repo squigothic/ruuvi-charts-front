@@ -6,7 +6,7 @@ const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)
   const humValues = measurements.map(measure => measure.relativehumidity)
   const timestamps = measurements.map(measure => new Date(measure.timestamp * 1000))
-  const hoursMinutes = timestamps.map(date => date.getHours()+':'+('0' + date.getMinutes()).slice(-2))
+  const hoursMinutes = timestamps.map(date => date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2))
 
   const data = {
     labels: hoursMinutes,
@@ -28,7 +28,7 @@ const Chart = ({ measurements }) => {
 
   const options = {
     title: {
-      display: true,
+      display: false,
       text: 'Lämpötila ja suhteellinen ilmankosteus'
     },
     scales: {
@@ -37,26 +37,26 @@ const Chart = ({ measurements }) => {
           type: 'linear',
           position: 'left',
           id: 'tempAxis',
-         // ticks: {
-         //   max: 26,
-         //   min: 19
-         // }
+          // ticks: {
+          //   max: 26,
+          //   min: 19
+          // }
         }, {
           type: 'linear',
           position: 'right',
           id: 'humAxis',
-         // ticks: {
-         //   max:101,
-         //   min: 80
-         // }
+          // ticks: {
+          //   max:101,
+          //   min: 80
+          // }
         }
       ]
     }
   }
 
   return (
-    <div className='chartContainer'>
-      <Line data={ data } options={ options } />
+    <div className='chart'>
+      <Line data={data} options={options} />
     </div>
   )
 }
