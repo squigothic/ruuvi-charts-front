@@ -35,8 +35,8 @@ const App = () => {
     return result
   }
 
-  // console.log('measurements1: ', measurementsOne)
-  // console.log('measurements2: ', measurementsTwo)
+  console.log('measurements1: ', measurementsOne)
+  console.log('measurements2: ', measurementsTwo)
   if (loaded) {
     return (
       <div>
