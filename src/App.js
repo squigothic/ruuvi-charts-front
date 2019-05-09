@@ -5,6 +5,8 @@ import ChartTitleData from './components/chartTitleData'
 const App = () => {
   const [measurementsOne, setMeasurementsOne] = useState([])
   const [measurementsTwo, setMeasurementsTwo] = useState([])
+  const [measurementsThree, setMeasurementsThree] = useState([])
+  const [measurementsFour, setMeasurementsFour] = useState([])
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
@@ -15,6 +17,8 @@ const App = () => {
         const distinctTags = getGroupedBy(response.data, 'tagname')
         setMeasurementsOne(distinctTags[0])
         setMeasurementsTwo(distinctTags[1])
+        setMeasurementsThree(distinctTags[2])
+        setMeasurementsFour(distinctTags[3])
         setLoaded(true)
       })
       .catch(err => {
@@ -43,6 +47,8 @@ const App = () => {
         <h1 className='titleCentered'>Ruuvifrontend</h1>
         <ChartTitleData data={measurementsOne} />
         <ChartTitleData data={measurementsTwo} />
+        <ChartTitleData data={measurementsThree} />
+        <ChartTitleData data={measurementsFour} />
       </div >
     )
   }
