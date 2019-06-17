@@ -1,4 +1,4 @@
 #!/bin/sh
 npm run build
-rm -rf ../ruuvibackend/build
-cp -r build ../ruuvibackend/build
+rm -rf ../ga_ruuvicharts/build
+cp -r build ../ga_ruuvicharts/build

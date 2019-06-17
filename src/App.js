@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import measurementService from './services/measurements'
-import ChartTitleData from './components/chartTitleData'
+import RuuviChart from './components/RuuviChart'
+import Heading from './components/Heading'
+
+const PageWrapper = styled.div`
+
+`
+
+const MainContent = styled.div`
+  width: 90%;
+  margin: auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
 
 const App = () => {
   const [measurementsOne, setMeasurementsOne] = useState([])
@@ -43,13 +57,15 @@ const App = () => {
   console.log('measurements2: ', measurementsTwo)
   if (loaded) {
     return (
-      <div>
-        <h1 className='titleCentered'>Ruuvifrontend</h1>
-        <ChartTitleData data={measurementsOne} />
-        <ChartTitleData data={measurementsTwo} />
-        <ChartTitleData data={measurementsThree} />
-        <ChartTitleData data={measurementsFour} />
-      </div >
+      <PageWrapper>
+        <Heading />
+        <MainContent>
+          <RuuviChart data={measurementsOne} name='Parveke' />
+          <RuuviChart data={measurementsTwo} name='Makuuhuone' />
+          <RuuviChart data={measurementsThree} name='Kylppäri' />
+          <RuuviChart data={measurementsFour} name='Olohuone' />
+        </MainContent>
+      </PageWrapper>
     )
   }
 

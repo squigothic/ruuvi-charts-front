@@ -1,5 +1,9 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Line } from 'react-chartjs-2'
+
+const ChartData = styled.div`
+`
 
 const Chart = ({ measurements }) => {
 
@@ -15,14 +19,20 @@ const Chart = ({ measurements }) => {
       yAxisID: 'tempAxis',
       borderColor: 'rgb(255, 99, 132)',
       fill: false,
-      data: tempValues
+      data: tempValues,
+      borderWidth: 3,
+      pointRadius: 0,
+      pointHitRadius: 10
     },
     {
       label: 'Ilmankosteus',
       yAxisID: 'humAxis',
       borderColor: 'rgb(45, 94, 132',
       fill: false,
-      data: humValues
+      data: humValues,
+      borderWidth: 3,
+      pointRadius: 0,
+      pointHitRadius: 10
     }]
   }
 
@@ -30,6 +40,9 @@ const Chart = ({ measurements }) => {
     title: {
       display: false,
       text: 'Lämpötila ja suhteellinen ilmankosteus'
+    },
+    legend: {
+      display: false
     },
     scales: {
       yAxes: [
@@ -55,9 +68,9 @@ const Chart = ({ measurements }) => {
   }
 
   return (
-    <div className='chart'>
+    <ChartData>
       <Line data={data} options={options} />
-    </div>
+    </ChartData>
   )
 }
 
