@@ -12,9 +12,14 @@ const RuuviChart = ({ data, name }) => {
   const latestTemp = data[data.length - 1].temperature
   const latestHum = data[data.length - 1].relativehumidity
 
+  const averageTemp = Number.parseFloat(data
+    .map(t => t.temperature)
+    .reduce((a, b) => (a + b)) / data.length)
+    .toPrecision(4)
+
   return (
     <ChartWrapper>
-      <ChartHeader name={name} latestHum={latestHum} latestTemp={latestTemp} />
+      <ChartHeader name={name} latestHum={latestHum} latestTemp={latestTemp} averageTemp={averageTemp} />
       <Chart measurements={data} />
     </ChartWrapper>
   )

@@ -31,9 +31,19 @@ const HiliteNumber = styled.span`
   margin-right: 5px;
 `
 
-const ChartHeader = ({ name, latestHum, latestTemp }) => {
+const ToggleButton = styled.div`
+  font-size: 16px;
+  padding-left: 20px;
+  display: inline-block;
+`
 
-  const [togglable, setTogglable] = useState(true)
+const ChartHeader = ({ name, latestHum, latestTemp, averageTemp }) => {
+
+  const [togglable, setTogglable] = useState(false)
+
+  const handleClick = () => {
+    setTogglable(!togglable)
+  }
 
   return (
     <ChartHeaderWrapper>
@@ -45,7 +55,10 @@ const ChartHeader = ({ name, latestHum, latestTemp }) => {
         </HiliteNumber>
         Humidity:
       <HiliteNumber color='#2d5e84'>{latestHum}</HiliteNumber>
-        {togglable && <ExtraInfo />}
+        <ToggleButton onClick={handleClick}>
+          {togglable ? '▲' : '▼'}
+        </ToggleButton>
+        {togglable && <ExtraInfo averageTemp={averageTemp} />}
       </LatestData>
     </ChartHeaderWrapper>
   )

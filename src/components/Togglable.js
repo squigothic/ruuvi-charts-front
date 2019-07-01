@@ -2,13 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ExtraInfoWrapper = styled.div`
-  height: 40px;
-  background: blue;
+  margin-top: 5px;
 `
 
-const ExtraInfo = () => (
+const HiliteNumber = styled.span`
+  color: ${props => props.color};
+  margin-left: 5px;
+  margin-right: 5px;
+`
+
+const ExtraInfo = ({ averageTemp }) => (
   <ExtraInfoWrapper>
-    <p>This is extra info</p>
+
+    Average (24h):<HiliteNumber color='#e55977'>{averageTemp}</HiliteNumber>
   </ExtraInfoWrapper>
 )
 
