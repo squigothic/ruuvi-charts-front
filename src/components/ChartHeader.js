@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import ExtraInfo from './Togglable'
 
 const ChartHeaderWrapper = styled.div`
   padding: 0.5em 0em;
@@ -30,18 +31,24 @@ const HiliteNumber = styled.span`
   margin-right: 5px;
 `
 
-const ChartHeader = ({ name, latestHum, latestTemp }) => (
-  <ChartHeaderWrapper>
-    <ChartTitle>{name}</ChartTitle>
-    <LatestData>
-      Temperature:
+const ChartHeader = ({ name, latestHum, latestTemp }) => {
+
+  const [togglable, setTogglable] = useState(true)
+
+  return (
+    <ChartHeaderWrapper>
+      <ChartTitle>{name}</ChartTitle>
+      <LatestData>
+        Temperature:
       <HiliteNumber color='#e55977'>
-        {latestTemp}
-      </HiliteNumber>
-      Humidity:
+          {latestTemp}
+        </HiliteNumber>
+        Humidity:
       <HiliteNumber color='#2d5e84'>{latestHum}</HiliteNumber>
-    </LatestData>
-  </ChartHeaderWrapper>
-)
+        {togglable && <ExtraInfo />}
+      </LatestData>
+    </ChartHeaderWrapper>
+  )
+}
 
 export default ChartHeader
