@@ -51,9 +51,10 @@ const Chart = ({ measurements }) => {
           position: 'left',
           id: 'tempAxis',
           // ticks: {
-          //   max: 26,
-          //   min: 19
-          // }
+          //   max: 32,
+          //   min: 15,
+          //   stepSize: 1
+          //}
         }, {
           type: 'linear',
           position: 'right',
