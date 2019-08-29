@@ -9,8 +9,8 @@ const HeaderContainer = styled.div`
 `
 
 const TitleWrapper = styled.div`
-  width: 90%;
-  margin: auto;
+  margin: 0 20px;
+  display: inline-block;
 `
 const Title = styled.h2`
   color: #274262;
@@ -18,14 +18,25 @@ const Title = styled.h2`
   margin-top: 0;
   margin-bottom: 0;
   font-family: 'Helvetica', sans-serif;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }  
 `
 
-const Heading = () => (
-  <HeaderContainer>
-    <TitleWrapper>
-      <Title>Ruuvifrontend</Title>
-    </TitleWrapper>
-  </HeaderContainer>
-)
+const ButtonWrapper = styled.div`
+  float: right;
+  margin-right: 20px;
+`
+
+const Heading = ({ logout }) => {
+  return (
+    <HeaderContainer>
+      <TitleWrapper>
+        <Title>Ruuvifrontend</Title>
+      </TitleWrapper>
+      <ButtonWrapper><button onClick={() => logout()}>Change user</button></ButtonWrapper>
+    </HeaderContainer>
+  )
+}
 
 export default Heading

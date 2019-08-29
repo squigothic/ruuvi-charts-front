@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import measurementService from './services/measurements'
 import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
+import Loading from './components/Loading'
+import Login from './components/Login'
 
 const PageWrapper = styled.div`
 
@@ -19,38 +21,40 @@ const MainContent = styled.div`
 const App = () => {
   const [measurements, setMeasurements] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [user, setUser] = useState('')
 
   useEffect(() => {
-    measurementService
-      .getAll('squi')
+    const savedUser = window.localStorage.getItem('user')
+    savedUser && setUser(savedUser)
+  }, [])
+
+  useEffect(() => {
+    user && measurementService
+      .getAll(user)
       .then(response => {
-        console.log(response.data)
         setMeasurements(response.data)
+        console.log(response.data)
         setLoaded(true)
       })
       .catch(err => {
         console.log('virhe: ', err)
       })
-  }, [])
+  }, [user])
 
-  if (loaded) {
-    return (
-      <PageWrapper>
-        <Heading />
-        <MainContent>
-          <RuuviChart data={measurements[0]} name='Parveke' />
-          <RuuviChart data={measurements[1]} name='Makuuhuone' />
-          <RuuviChart data={measurements[2]} name='Kylppäri' />
-          <RuuviChart data={measurements[3]} name='Olohuone' />
-        </MainContent>
-      </PageWrapper>
-    )
+  const logout = () => {
+    window.localStorage.clear()
+    setUser('')
   }
 
   return (
-    <div>
-      <h1 className='titleCentered'>Ruuvifrontend</h1>
-    </div>
+    <PageWrapper>
+      <Heading logout={logout} />
+      {!user ? <Login setUsername={setUser} /> :
+        (<MainContent>
+          {loaded ?
+            measurements.map((tag) => <RuuviChart key={tag[0].tag} data={tag} name={tag[0].description} />) : <Loading />}
+        </MainContent>)}
+    </PageWrapper>
   )
 }
 
