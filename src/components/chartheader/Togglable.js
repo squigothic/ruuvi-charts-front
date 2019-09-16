@@ -11,10 +11,12 @@ const HiliteNumber = styled.span`
   margin-right: 5px;
 `
 
-const ExtraInfo = ({ averageTemp }) => (
+const ExtraInfo = ({ averageTemp, averageHum }) => (
   <ExtraInfoWrapper>
-
-    Average (24h):<HiliteNumber color='#e55977'>{averageTemp}</HiliteNumber>
+    Averages(24h):
+    <HiliteNumber color="#e55977">{averageTemp}</HiliteNumber>
+    |
+    <HiliteNumber color="#2d5e84">{averageHum}</HiliteNumber>
   </ExtraInfoWrapper>
 )
 
