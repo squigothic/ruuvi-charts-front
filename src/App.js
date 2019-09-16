@@ -6,9 +6,7 @@ import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
 
-const PageWrapper = styled.div`
-
-`
+const PageWrapper = styled.div``
 
 const MainContent = styled.div`
   width: 90%;
@@ -29,16 +27,17 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    user && measurementService
-      .getAll(user)
-      .then(response => {
-        setMeasurements(response.data)
-        console.log(response.data)
-        setLoaded(true)
-      })
-      .catch(err => {
-        console.log('virhe: ', err)
-      })
+    user &&
+      measurementService
+        .getAll(user)
+        .then(response => {
+          setMeasurements(response.data)
+          console.log(response.data)
+          setLoaded(true)
+        })
+        .catch(err => {
+          console.log('virhe: ', err)
+        })
   }, [user])
 
   const logout = () => {
@@ -49,14 +48,25 @@ const App = () => {
   return (
     <PageWrapper>
       <Heading logout={logout} />
-      {!user ? <Login setUsername={setUser} /> :
-        (<MainContent>
-          {loaded ?
-            measurements.map((tag) => <RuuviChart key={tag[0].tag} data={tag} name={tag[0].description} />) : <Loading />}
-        </MainContent>)}
+      {!user ? (
+        <Login setUsername={setUser} />
+      ) : (
+        <MainContent>
+          {loaded ? (
+            measurements.map(tag => (
+              <RuuviChart
+                key={tag[0].tag}
+                data={tag}
+                name={tag[0].description}
+              />
+            ))
+          ) : (
+            <Loading />
+          )}
+        </MainContent>
+      )}
     </PageWrapper>
   )
 }
-
 
 export default App
