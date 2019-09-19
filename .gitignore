@@ -26,3 +26,4 @@ yarn-error.log*
 .sh
 deploy-remote.sh
 deploy.sh
+now.json

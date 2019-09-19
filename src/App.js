@@ -51,20 +51,20 @@ const App = () => {
       {!user ? (
         <Login setUsername={setUser} />
       ) : (
-        <MainContent>
-          {loaded ? (
-            measurements.map(tag => (
-              <RuuviChart
-                key={tag[0].tag}
-                data={tag}
-                name={tag[0].description}
-              />
-            ))
-          ) : (
-            <Loading />
-          )}
-        </MainContent>
-      )}
+          <MainContent>
+            {loaded ? (
+              measurements.map(tag => (
+                <RuuviChart
+                  key={tag[0].tag}
+                  data={tag}
+                  name={tag[0].description}
+                />
+              ))
+            ) : (
+                <Loading />
+              )}
+          </MainContent>
+        )}
     </PageWrapper>
   )
 }
