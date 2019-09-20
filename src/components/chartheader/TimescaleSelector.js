@@ -4,6 +4,9 @@ import TimescaleButton from './TimescaleButton'
 
 const Wrapper = styled.div`
   display: flex;
+  margin-top: 10px;
+  width: 75px;
+  justify-content: space-between;
 `
 const TimescaleSelector = ({ setTimescale }) => {
   const scales = [24, 12, 2]

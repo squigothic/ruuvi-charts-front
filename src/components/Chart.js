@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Line } from 'react-chartjs-2'
 
-const ChartData = styled.div``
+const ChartData = styled.div`
+`
 
 const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)

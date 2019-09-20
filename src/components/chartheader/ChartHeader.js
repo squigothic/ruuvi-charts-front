@@ -11,13 +11,16 @@ const ChartHeaderWrapper = styled.div`
 
 const ChartDataWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  background-color: #e8ecef;
+  padding: 5px 0 5px 5px;
 `
 
 const ChartTitle = styled.h4`
-  font-size: 28px;
+  font-size: 35px;
   @media (max-width: 768px) {
-    font-size: 18px;
+    font-size: 25px;
   }
   margin-bottom: 0.1em;
   margin-top: 0;
@@ -28,21 +31,30 @@ const ChartTitle = styled.h4`
 
 const LatestData = styled.div`
   color: #4e4e4e;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 20px;
-  font-family: monospace;
+  font-family: helvetica;
   font-weight: 550;
+  
 `
+const InfoLineWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 10px;
+`
+
 const HiliteNumber = styled.span`
   color: ${props => props.color};
   margin-left: 5px;
-  margin-right: 5px;
+  margin-right: 15px;
 `
 
 const ToggleButton = styled.div`
   font-size: 12px;
   padding-left: 20px;
   display: inline-block;
+  line-height: 20px;
 `
 
 const ChartHeader = ({
@@ -63,18 +75,21 @@ const ChartHeader = ({
     <ChartHeaderWrapper>
       <ChartTitle>{name}</ChartTitle>
       <ChartDataWrapper>
-        <LatestData>
-          Temperature:
-          <HiliteNumber color="#e55977">{latestTemp}</HiliteNumber>
-          Humidity:
-          <HiliteNumber color="#2d5e84">{latestHum}</HiliteNumber>
+        <InfoLineWrapper>
+          <LatestData>
+            Temperature:
+          <HiliteNumber color="#e55977">{latestTemp} &deg;C</HiliteNumber>
+            Humidity:
+          <HiliteNumber color="#2d5e84">{latestHum} %</HiliteNumber>
+
+          </LatestData>
           <ToggleButton onClick={handleClick}>
             {togglable ? '▲' : '▼'}
           </ToggleButton>
-          {togglable && (
-            <ExtraInfo averageTemp={averageTemp} averageHum={averageHum} />
-          )}
-        </LatestData>
+        </InfoLineWrapper>
+        {togglable && (
+          <ExtraInfo averageTemp={averageTemp} averageHum={averageHum} />
+        )}
       </ChartDataWrapper>
       <TimescaleSelector setTimescale={setTimescale} />
     </ChartHeaderWrapper>

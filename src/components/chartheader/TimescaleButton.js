@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   height: 17px;
-  border-bottom: ${props => (props.selected ? '2px solid red' : 'none')};
+  background-color: ${props => (props.selected ? '#E8ECEF' : 'transparent')};
 `
 const buttonReset = `
   border: 0;
