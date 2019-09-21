@@ -56,7 +56,7 @@ const App = () => {
               measurements.map(tag => (
                 <RuuviChart
                   key={tag[0].tag}
-                  data={tag}
+                  measurements={tag}
                   name={tag[0].description}
                 />
               ))

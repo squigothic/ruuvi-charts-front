@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Chart from './Chart'
 import ChartHeader from './chartheader/ChartHeader'
@@ -8,8 +8,17 @@ const ChartWrapper = styled.div`
     margin-top: 20px;
   }
 `
-const RuuviChart = ({ data, name }) => {
+const RuuviChart = ({ measurements, name }) => {
   const [timeScale, setTimescale] = useState(24)
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    setData(measurements)
+  }, [measurements])
+
+  useEffect(() => {
+
+  }, [timeScale])
 
   const latestTemp = data[data.length - 1].temperature
   const latestHum = data[data.length - 1].relativehumidity
