@@ -14,21 +14,26 @@ const LoginBox = styled.div`
 const Login = ({ setUsername }) => {
   const [newUser, setNewUser] = useState('insert username...')
 
-  const submitUser = (event) => {
+  const submitUser = event => {
     event.preventDefault()
     setUsername(newUser)
     window.localStorage.setItem('user', newUser)
     setNewUser('')
   }
 
-  const handleFormChange = (event) => {
+  const handleFormChange = event => {
     setNewUser(event.target.value)
   }
 
   return (
     <LoginBox>
       <form onSubmit={submitUser}>
-        <input type="text" value={newUser} onChange={handleFormChange} onClick={() => newUser === 'insert username...' && setNewUser('')} />
+        <input
+          type="text"
+          value={newUser}
+          onChange={handleFormChange}
+          onClick={() => newUser === 'insert username...' && setNewUser('')}
+        />
         <button type="submit">save</button>
       </form>
     </LoginBox>
