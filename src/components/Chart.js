@@ -15,6 +15,16 @@ const Chart = ({ measurements }) => {
     date => date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2)
   )
 
+  let minValue = Math.min(...tempValues)
+  let maxValue = Math.max(...tempValues)
+
+
+  if (maxValue - minValue < 1) {
+    const change = (1 - (maxValue - minValue)) / 2
+    minValue -= change
+    maxValue += change
+  }
+
   const data = {
     labels: hoursMinutes,
     datasets: [
@@ -31,7 +41,7 @@ const Chart = ({ measurements }) => {
       {
         label: 'Ilmankosteus',
         yAxisID: 'humAxis',
-        borderColor: 'rgb(45, 94, 132',
+        borderColor: 'rgb(45, 94, 132)',
         fill: false,
         data: humValues,
         borderWidth: 3,
@@ -55,11 +65,10 @@ const Chart = ({ measurements }) => {
           type: 'linear',
           position: 'right',
           id: 'tempAxis',
-          // ticks: {
-          //   max: 32,
-          //   min: 15,
-          //   stepSize: 1
-          //}
+          ticks: {
+             max: maxValue,
+             min: minValue,
+          }
         },
         {
           type: 'linear',
