@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import measurementService from './services/measurements'
 import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
+import { initUser, logoutUser } from './reducers/userReducer'
 
 const PageWrapper = styled.div``
 
@@ -17,40 +17,23 @@ const MainContent = styled.div`
   }
 `
 
-const App = () => {
-  const [measurements, setMeasurements] = useState([])
+const App = ({ initUser, user, logoutUser, measurements }) => {
   const [loaded, setLoaded] = useState(false)
-  const [user, setUser] = useState('')
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
-    savedUser && setUser(savedUser)
-  }, [])
+    savedUser && initUser(savedUser)
+  }, [initUser])
 
   useEffect(() => {
-    user &&
-      measurementService
-        .getAll(user)
-        .then(response => {
-          setMeasurements(response.data)
-          console.log(response.data)
-          setLoaded(true)
-        })
-        .catch(err => {
-          console.log('virhe: ', err)
-        })
-  }, [user])
-
-  const logout = () => {
-    window.localStorage.clear()
-    setUser('')
-  }
+    measurements !== null && setLoaded(true)
+  }, [measurements, setLoaded])
 
   return (
     <PageWrapper>
-      <Heading logout={logout} />
+      <Heading logout={logoutUser} />
       {!user ? (
-        <Login setUsername={setUser} />
+        <Login login={initUser} />
       ) : (
         <MainContent>
           {loaded ? (
@@ -77,4 +60,9 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = {
+  initUser,
+  logoutUser,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

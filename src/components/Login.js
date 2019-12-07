@@ -11,13 +11,11 @@ const LoginBox = styled.div`
   align-items: center;
 `
 
-const Login = ({ setUsername }) => {
+const Login = ({ login }) => {
   const [newUser, setNewUser] = useState('insert username...')
-
   const submitUser = event => {
     event.preventDefault()
-    setUsername(newUser)
-    window.localStorage.setItem('user', newUser)
+    login(newUser)
     setNewUser('')
   }
 

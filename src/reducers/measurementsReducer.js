@@ -1,4 +1,4 @@
-import measurementService from './services/measurements'
+import measurementService from '../services/measurements'
 
 const measurementsReducer = (state = null, action) => {
   switch (action.type) {
@@ -9,12 +9,12 @@ const measurementsReducer = (state = null, action) => {
   }
 }
 
-export const initializeMeasurements = () => {
+export const initializeMeasurements = user => {
   return async dispatch => {
-    const measurements = await measurementService.getAll()
+    const measurements = await measurementService.getAll(user)
     dispatch({
-      type: 'INIT_MEASUREMENT',
-      data: measurements,
+      type: 'INIT_MEASUREMENTS',
+      data: measurements.data,
     })
   }
 }
