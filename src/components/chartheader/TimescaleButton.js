@@ -30,8 +30,6 @@ const TimescaleButton = ({ setTimescale, scale, selected, setSelected }) => {
     setSelected(scale)
   }
 
-  selected && console.log('valittiin nappi ', scale)
-
   return (
     <Wrapper selected={selected}>
       <ScaleButton onClick={handleSelect}>{scale}</ScaleButton>

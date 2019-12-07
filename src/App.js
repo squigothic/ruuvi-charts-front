@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import RuuviChart from './components/RuuviChart'
@@ -17,17 +17,11 @@ const MainContent = styled.div`
   }
 `
 
-const App = ({ initUser, user, logoutUser, measurements }) => {
-  const [loaded, setLoaded] = useState(false)
-
+const App = ({ initUser, user, logoutUser, measurements, loading }) => {
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
     savedUser && initUser(savedUser)
   }, [initUser])
-
-  useEffect(() => {
-    measurements !== null && setLoaded(true)
-  }, [measurements, setLoaded])
 
   return (
     <PageWrapper>
@@ -36,7 +30,7 @@ const App = ({ initUser, user, logoutUser, measurements }) => {
         <Login login={initUser} />
       ) : (
         <MainContent>
-          {loaded ? (
+          {!loading ? (
             measurements.map(tag => (
               <RuuviChart
                 key={tag[0].tag}
@@ -55,8 +49,9 @@ const App = ({ initUser, user, logoutUser, measurements }) => {
 
 const mapStateToProps = state => {
   return {
-    measurements: state.measurements,
+    measurements: state.measurements.data,
     user: state.user,
+    loading: state.measurements.isFetching,
   }
 }
 
