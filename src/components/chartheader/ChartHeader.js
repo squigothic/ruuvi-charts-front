@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ExtraInfo from './Togglable'
 import TimescaleSelector from './TimescaleSelector'
+import ChartTitle from './ChartTitle'
 
 const ChartHeaderWrapper = styled.div`
   padding: 0.1em 0em;
@@ -15,18 +16,6 @@ const ChartDataWrapper = styled.div`
   justify-content: space-between;
   background-color: #e8ecef;
   padding: 5px 0 5px 5px;
-`
-
-const ChartTitle = styled.h4`
-  font-size: 35px;
-  @media (max-width: 768px) {
-    font-size: 25px;
-  }
-  margin-bottom: 0.1em;
-  margin-top: 0;
-  margin-right: 0.2em;
-  color: #3089af;
-  font-family: helvetica;
 `
 
 const LatestData = styled.div`
@@ -73,7 +62,7 @@ const ChartHeader = ({
 
   return (
     <ChartHeaderWrapper>
-      <ChartTitle>{name}</ChartTitle>
+      <ChartTitle titleText={name} />
       <ChartDataWrapper>
         <InfoLineWrapper>
           <LatestData>
