@@ -7,7 +7,7 @@ const ChartData = styled.div`
 
 const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)
-  const humValues = measurements.map(measure => measure.relativehumidity)
+  const humValues = measurements.map(measure => measure.humidity)
   const timestamps = measurements.map(
     measure => new Date(measure.timestamp * 1000)
   )
@@ -66,8 +66,8 @@ const Chart = ({ measurements }) => {
           position: 'right',
           id: 'tempAxis',
           ticks: {
-             max: maxValue,
-             min: minValue,
+            max: maxValue,
+            min: minValue,
           }
         },
         {

@@ -12,15 +12,13 @@ const RuuviChart = ({ data, name }) => {
   const [timeScale, setTimescale] = useState(24)
 
   const latestTemp = data[data.length - 1].temperature
-  const latestHum = data[data.length - 1].relativehumidity
+  const latestHum = data[data.length - 1].humidity
 
-  const averageTemp = Number.parseFloat(
-    data.map(t => t.temperature).reduce((a, b) => a + b) / data.length
-  ).toPrecision(4)
+  console.log('chartin kamat: ', data.map(t => t.temperature).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)))
 
-  const averageHum = Number.parseFloat(
-    data.map(t => t.relativehumidity).reduce((a, b) => a + b) / data.length
-  ).toPrecision(4)
+  const averageTemp = (data.map(t => t.temperature).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)) / data.length).toPrecision(4)
+
+  const averageHum = (data.map(t => t.humidity).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)) / data.length).toPrecision(4)
 
   if (timeScale !== 24) {
     const currentTime = new Date(data[data.length - 1].timestamp * 1000)

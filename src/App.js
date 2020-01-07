@@ -5,7 +5,7 @@ import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
-import { initUser, logoutUser } from './reducers/userReducer'
+import { initUser, logoutUser, setUser } from './reducers/userReducer'
 
 const PageWrapper = styled.div``
 
@@ -17,32 +17,32 @@ const MainContent = styled.div`
   }
 `
 
-const App = ({ initUser, user, logoutUser, measurements, loading }) => {
+const App = ({ initUser, user, logoutUser, measurements, loading, setUser }) => {
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
-    savedUser && initUser(savedUser)
-  }, [initUser])
-
+    savedUser && setUser(JSON.parse(savedUser))
+  }, [setUser])
+  !loading && measurements.map(tag => console.log(tag))
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
       {!user ? (
         <Login login={initUser} />
       ) : (
-        <MainContent>
-          {!loading ? (
-            measurements.map(tag => (
-              <RuuviChart
-                key={tag[0].tag}
-                data={tag}
-                name={tag[0].description}
-              />
-            ))
-          ) : (
-            <Loading />
-          )}
-        </MainContent>
-      )}
+          <MainContent>
+            {!loading ? (
+              measurements.map(tag => (
+                <RuuviChart
+                  key={(JSON.parse(tag[0].data)).friendlyname}
+                  data={tag.map(measurement => JSON.parse(measurement.data))}
+                  name={(JSON.parse(tag[0].data)).friendlyname}
+                />
+              ))
+            ) : (
+                <Loading />
+              )}
+          </MainContent>
+        )}
     </PageWrapper>
   )
 }
@@ -58,6 +58,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   initUser,
   logoutUser,
+  setUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
