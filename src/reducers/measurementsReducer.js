@@ -19,10 +19,8 @@ export const initializeMeasurements = user => {
       type: 'INIT_FETCH',
     })
     const { user: { token } } = getState()
-    console.log('token:', token)
     measurementService.setToken(token)
     const measurements = await measurementService.getAll(user)
-    console.log('measurementsaawdawd: ', measurements.data)
     dispatch({
       type: 'FETCH_SUCCESS',
       data: measurements.data,

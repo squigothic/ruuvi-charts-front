@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
+import Datedisplay from './components/timepicker/Datedisplay'
 import { initUser, logoutUser, setUser } from './reducers/userReducer'
 
 const PageWrapper = styled.div``
@@ -18,14 +19,16 @@ const MainContent = styled.div`
 `
 
 const App = ({ initUser, user, logoutUser, measurements, loading, setUser }) => {
+
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
     savedUser && setUser(JSON.parse(savedUser))
   }, [setUser])
-  !loading && measurements.map(tag => console.log(tag))
+
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
+      <Datedisplay />
       {!user ? (
         <Login login={initUser} />
       ) : (

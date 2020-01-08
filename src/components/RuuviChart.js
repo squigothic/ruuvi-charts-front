@@ -14,8 +14,6 @@ const RuuviChart = ({ data, name }) => {
   const latestTemp = data[data.length - 1].temperature
   const latestHum = data[data.length - 1].humidity
 
-  console.log('chartin kamat: ', data.map(t => t.temperature).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)))
-
   const averageTemp = (data.map(t => t.temperature).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)) / data.length).toPrecision(4)
 
   const averageHum = (data.map(t => t.humidity).reduce((a, b) => Number.parseFloat(a) + Number.parseFloat(b)) / data.length).toPrecision(4)

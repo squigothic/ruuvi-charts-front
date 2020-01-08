@@ -22,9 +22,8 @@ const ChartTitle = styled.h4`
   @media (max-width: 768px) {
     font-size: 25px;
   }
-  margin-bottom: 0.1em;
-  margin-top: 0;
-  margin-right: 0.2em;
+  margin: 5px 5px 2px 0;
+  padding-left: 5px;
   color: #3089af;
   font-family: helvetica;
 `

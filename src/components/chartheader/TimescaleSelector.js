@@ -5,6 +5,7 @@ import TimescaleButton from './TimescaleButton'
 const Wrapper = styled.div`
   display: flex;
   margin-top: 10px;
+  padding-left: 5px;
   width: 75px;
   justify-content: space-between;
 `

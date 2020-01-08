@@ -4,24 +4,25 @@ import styled from 'styled-components'
 const HeaderContainer = styled.div`
   background: #E8ECEF;
   border-bottom: 1px solid black;
-  height: 40px;
   line-height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 `
 
 const ContentWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 90%;
-  margin: auto;
+  flex-direction: column;
+  
   @media (max-width: 768px) {
     width: 100%;
   }
 `
-
-const TitleWrapper = styled.div`
-
+const UpperRowWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
 `
+
 const Title = styled.h2`
   color: #274262;
   font-size: 32px;
@@ -33,18 +34,22 @@ const Title = styled.h2`
   }  
 `
 
-const ButtonWrapper = styled.div`
-  float: right;
+const ButtonWrapper = styled.button`
+  height: 23px;
+  background: white;
+  border: 2px solid #274262;
+  border-radius: 3px;
+  color: #274262;
 `
 
 const Heading = ({ logout }) => {
   return (
     <HeaderContainer>
       <ContentWrapper>
-        <TitleWrapper>
+        <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
-        </TitleWrapper>
-        <ButtonWrapper><button onClick={() => logout()}>Change user</button></ButtonWrapper>
+          <ButtonWrapper onClick={() => logout()}>Change user</ButtonWrapper>
+        </UpperRowWrapper>
       </ContentWrapper>
     </HeaderContainer>
   )

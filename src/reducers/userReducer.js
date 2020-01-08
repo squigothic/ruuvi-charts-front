@@ -40,7 +40,6 @@ export const logoutUser = () => {
 }
 
 export const setUser = user => {
-  console.log('awdawd: ', user)
   return async dispatch => {
     dispatch({
       type: 'SET_USER',
