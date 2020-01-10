@@ -4,8 +4,7 @@ import styled from 'styled-components'
 const HeaderContainer = styled.div`
   background: #E8ECEF;
   border-bottom: 1px solid black;
-  line-height: 40px;
-  margin-bottom: 7px;
+  line-height: 60px;
 `
 
 const ContentWrapper = styled.div`
@@ -25,7 +24,7 @@ const UpperRowWrapper = styled.div`
 
 const Title = styled.h2`
   color: #274262;
-  font-size: 32px;
+  font-size: 40px;
   margin-top: 0;
   margin-bottom: 0;
   font-family: 'Helvetica', sans-serif;
@@ -48,7 +47,7 @@ const Heading = ({ logout }) => {
       <ContentWrapper>
         <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
-          <ButtonWrapper onClick={() => logout()}>Change user</ButtonWrapper>
+          <ButtonWrapper onClick={() => logout()}>Logout</ButtonWrapper>
         </UpperRowWrapper>
       </ContentWrapper>
     </HeaderContainer>
