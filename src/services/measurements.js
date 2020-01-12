@@ -11,6 +11,18 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
+const getTimeperiod = async (period, user) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  try {
+    const response = await axios.post(`${baseUrl}/${user}`, period, config)
+    return response
+  } catch (error) {
+    console.log('error: ', error)
+  }
+}
+
 const getAll = async user => {
   //console.log(`Tehdään pyyntö osoitteeseen ${baseUrl}`)
   const config = {
@@ -33,4 +45,4 @@ const getAll = async user => {
   }
 }
 
-export default { getAll, setToken }
+export default { getAll, setToken, getTimeperiod }

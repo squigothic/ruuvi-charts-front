@@ -54,7 +54,7 @@ const Login = ({ login }) => {
           onChange={handleFormChange}
           onClick={() => password === 'insert password...' && setPassword('')}
         />
-        <button type="submit">save</button>
+        <button type="submit">Login</button>
       </form>
     </LoginBox>
   )

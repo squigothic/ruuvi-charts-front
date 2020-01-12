@@ -7,6 +7,7 @@ import Loading from './components/Loading'
 import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
 import { initUser, logoutUser, setUser } from './reducers/userReducer'
+import { getTimeperiod } from './reducers/measurementsReducer'
 
 const PageWrapper = styled.div``
 
@@ -28,7 +29,7 @@ const App = ({ initUser, user, logoutUser, measurements, loading, setUser }) => 
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
-      <Datedisplay />
+      <Datedisplay getTimeperiod={getTimeperiod} />
       {!user ? (
         <Login login={initUser} />
       ) : (
@@ -61,7 +62,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   initUser,
   logoutUser,
-  setUser
+  setUser,
+  getTimeperiod
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

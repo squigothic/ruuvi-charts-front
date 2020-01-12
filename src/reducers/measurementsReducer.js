@@ -28,4 +28,18 @@ export const initializeMeasurements = user => {
   }
 }
 
+export const getTimeperiod = (period) => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: 'INIT_FETCH',
+    })
+    const { user: { user } } = getState()
+    const measurements = await measurementService.getTimeperiod(period, user)
+    dispatch({
+      type: 'FETCH_SUCCESS',
+      data: measurements.data,
+    })
+  }
+}
+
 export default measurementsReducer
