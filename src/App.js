@@ -7,7 +7,6 @@ import Loading from './components/Loading'
 import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
 import { initUser, logoutUser, setUser } from './reducers/userReducer'
-import { getTimeperiod } from './reducers/measurementsReducer'
 
 const PageWrapper = styled.div``
 
@@ -19,8 +18,16 @@ const MainContent = styled.div`
   }
 `
 
-const App = ({ initUser, user, logoutUser, measurements, loading, setUser }) => {
-
+const App = ({
+  initUser,
+  user,
+  logoutUser,
+  measurements,
+  loading,
+  setUser,
+  getTimeperiod,
+  showNotification,
+}) => {
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
     savedUser && setUser(JSON.parse(savedUser))
@@ -29,24 +36,24 @@ const App = ({ initUser, user, logoutUser, measurements, loading, setUser }) => 
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
-      <Datedisplay getTimeperiod={getTimeperiod} />
+      <Datedisplay />
       {!user ? (
         <Login login={initUser} />
       ) : (
-          <MainContent>
-            {!loading ? (
-              measurements.map(tag => (
-                <RuuviChart
-                  key={(JSON.parse(tag[0].data)).friendlyname}
-                  data={tag.map(measurement => JSON.parse(measurement.data))}
-                  name={(JSON.parse(tag[0].data)).friendlyname}
-                />
-              ))
-            ) : (
-                <Loading />
-              )}
-          </MainContent>
-        )}
+        <MainContent>
+          {!loading ? (
+            measurements.map(tag => (
+              <RuuviChart
+                key={JSON.parse(tag[0].data).friendlyname}
+                data={tag.map(measurement => JSON.parse(measurement.data))}
+                name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+              />
+            ))
+          ) : (
+            <Loading />
+          )}
+        </MainContent>
+      )}
     </PageWrapper>
   )
 }
@@ -63,7 +70,6 @@ const mapDispatchToProps = {
   initUser,
   logoutUser,
   setUser,
-  getTimeperiod
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

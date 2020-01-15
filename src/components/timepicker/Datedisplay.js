@@ -32,20 +32,20 @@ const CurrentTimePeriod = styled.span`
   font-size: 22px;
 `
 
-const Datedisplay = ({ getTimeperiod }) => {
+const Datedisplay = () => {
   const [pickerVisible, setPickerVisible] = useState(false)
 
   return (
     <Wrapper>
       <TitleContainer>
         <CurrentTimePeriod>Timeperiod:</CurrentTimePeriod>
-        <ToggleButton onClick={() => setPickerVisible(!pickerVisible)} >Pick date</ToggleButton>
-
+        <ToggleButton onClick={() => setPickerVisible(!pickerVisible)}>
+          Pick date
+        </ToggleButton>
       </TitleContainer>
-      {pickerVisible
-        ? <Timepicker getTimeperiod={getTimeperiod} />
-        : null
-      }
+      {pickerVisible ? (
+        <Timepicker />
+      ) : null}
     </Wrapper>
   )
 }

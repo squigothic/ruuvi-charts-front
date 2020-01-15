@@ -4,7 +4,6 @@ const baseUrl = 'https://nameless-river-83647.herokuapp.com/measurements'
 //const baseUrl = 'https://subdomain.marakassi.com/measurements'
 //const baseUrl = 'http://192.168.100.196:8080/measurements'
 
-
 let token = null
 
 const setToken = newToken => {
@@ -12,6 +11,7 @@ const setToken = newToken => {
 }
 
 const getTimeperiod = async (period, user) => {
+  console.log('tsekkaillaan periodia...')
   const config = {
     headers: { Authorization: token },
   }
