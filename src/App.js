@@ -25,8 +25,7 @@ const App = ({
   measurements,
   loading,
   setUser,
-  getTimeperiod,
-  showNotification,
+  currentTimeperiod,
 }) => {
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
@@ -36,7 +35,7 @@ const App = ({
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
-      <Datedisplay />
+      <Datedisplay currentTimeperiod={currentTimeperiod} />
       {!user ? (
         <Login login={initUser} />
       ) : (
@@ -61,6 +60,7 @@ const App = ({
 const mapStateToProps = state => {
   return {
     measurements: state.measurements.data,
+    currentTimeperiod: state.measurements.currentTimeperiod,
     user: state.user,
     loading: state.measurements.isFetching,
   }

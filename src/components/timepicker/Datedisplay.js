@@ -32,8 +32,9 @@ const CurrentTimePeriod = styled.span`
   font-size: 22px;
 `
 
-const Datedisplay = () => {
+const Datedisplay = currentTimeperiod => {
   const [pickerVisible, setPickerVisible] = useState(false)
+  console.log('timeperioawd: ', currentTimeperiod)
 
   return (
     <Wrapper>
@@ -43,9 +44,7 @@ const Datedisplay = () => {
           Pick date
         </ToggleButton>
       </TitleContainer>
-      {pickerVisible ? (
-        <Timepicker />
-      ) : null}
+      {pickerVisible ? <Timepicker /> : null}
     </Wrapper>
   )
 }

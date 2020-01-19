@@ -2,8 +2,6 @@ import measurementService from '../services/measurements'
 
 const initialState = { data: [] }
 
-const createDateDescription = context => {}
-
 const measurementsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'INIT_FETCH':
@@ -13,7 +11,7 @@ const measurementsReducer = (state = initialState, action) => {
         ...state,
         data: action.data.measurements,
         isFetching: false,
-        timeperiodDescription: action.data.description,
+        currentTimeperiod: action.data.currentTimeperiod,
       }
     default:
       return state
@@ -40,7 +38,7 @@ export const initializeMeasurements = user => {
   }
 }
 
-export const getTimeperiod = (period, description) => {
+export const getTimeperiod = (period, currentTimeperiod) => {
   return async (dispatch, getState) => {
     dispatch({
       type: 'INIT_FETCH',
@@ -56,7 +54,7 @@ export const getTimeperiod = (period, description) => {
       type: 'FETCH_SUCCESS',
       data: {
         measurements: measurements.data,
-        description,
+        currentTimeperiod,
       },
     })
   }
