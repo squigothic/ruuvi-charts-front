@@ -35,23 +35,26 @@ const App = ({
   return (
     <PageWrapper>
       <Heading logout={logoutUser} />
-      <Datedisplay currentTimeperiod={currentTimeperiod} />
+
       {!user ? (
         <Login login={initUser} />
       ) : (
-          <MainContent>
-            {!loading ? (
-              measurements.map(tag => (
-                <RuuviChart
-                  key={JSON.parse(tag[0].data).friendlyname}
-                  data={tag.map(measurement => JSON.parse(measurement.data))}
-                  name={JSON.parse(tag[tag.length - 1].data).friendlyname}
-                />
-              ))
-            ) : (
-                <Loading />
-              )}
-          </MainContent>
+          <>
+            <Datedisplay currentTimeperiod={currentTimeperiod} />
+            <MainContent>
+              {!loading ? (
+                measurements.map(tag => (
+                  <RuuviChart
+                    key={JSON.parse(tag[0].data).friendlyname}
+                    data={tag.map(measurement => JSON.parse(measurement.data))}
+                    name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+                  />
+                ))
+              ) : (
+                  <Loading />
+                )}
+            </MainContent>
+          </>
         )}
     </PageWrapper>
   )

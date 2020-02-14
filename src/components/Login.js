@@ -18,7 +18,7 @@ const Login = ({ login }) => {
   const submitUser = event => {
     event.preventDefault()
     login({
-      'username': newUser,
+      'username': newUser.toLowerCase(),
       'password': password
     })
     setNewUser('')
