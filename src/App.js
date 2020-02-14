@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import RuuviChart from './components/RuuviChart'
@@ -39,20 +39,20 @@ const App = ({
       {!user ? (
         <Login login={initUser} />
       ) : (
-        <MainContent>
-          {!loading ? (
-            measurements.map(tag => (
-              <RuuviChart
-                key={JSON.parse(tag[0].data).friendlyname}
-                data={tag.map(measurement => JSON.parse(measurement.data))}
-                name={JSON.parse(tag[tag.length - 1].data).friendlyname}
-              />
-            ))
-          ) : (
-            <Loading />
-          )}
-        </MainContent>
-      )}
+          <MainContent>
+            {!loading ? (
+              measurements.map(tag => (
+                <RuuviChart
+                  key={JSON.parse(tag[0].data).friendlyname}
+                  data={tag.map(measurement => JSON.parse(measurement.data))}
+                  name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+                />
+              ))
+            ) : (
+                <Loading />
+              )}
+          </MainContent>
+        )}
     </PageWrapper>
   )
 }

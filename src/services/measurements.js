@@ -11,7 +11,6 @@ const setToken = newToken => {
 }
 
 const getTimeperiod = async (period, user) => {
-  console.log('tsekkaillaan periodia...')
   const config = {
     headers: { Authorization: token },
   }

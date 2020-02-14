@@ -29,17 +29,27 @@ const ToggleButton = styled.button`
 `
 
 const CurrentTimePeriod = styled.span`
-  font-size: 22px;
+  font-size: 16px;
 `
 
-const Datedisplay = currentTimeperiod => {
+const Datedisplay = ({ currentTimeperiod }) => {
   const [pickerVisible, setPickerVisible] = useState(false)
-  console.log('timeperioawd: ', currentTimeperiod)
+
+  const formatTime = dateString => {
+    const date = new Date(dateString)
+    if (!dateString) {
+      return null
+    }
+    return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)} ${date.getHours()}:00`
+  }
 
   return (
     <Wrapper>
       <TitleContainer>
-        <CurrentTimePeriod>Timeperiod:</CurrentTimePeriod>
+        <CurrentTimePeriod>Timeperiod: {currentTimeperiod?.beginning !== undefined
+          ? (formatTime(currentTimeperiod?.beginning) + ' - ' + formatTime(currentTimeperiod?.end))
+          : 'Last 24 hours'}
+        </CurrentTimePeriod>
         <ToggleButton onClick={() => setPickerVisible(!pickerVisible)}>
           Pick date
         </ToggleButton>

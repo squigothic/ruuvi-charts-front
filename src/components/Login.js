@@ -22,6 +22,7 @@ const Login = ({ login }) => {
       'password': password
     })
     setNewUser('')
+    setPassword('')
   }
 
   const handleFormChange = event => {

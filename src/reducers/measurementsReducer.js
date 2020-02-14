@@ -11,7 +11,7 @@ const measurementsReducer = (state = initialState, action) => {
         ...state,
         data: action.data.measurements,
         isFetching: false,
-        currentTimeperiod: action.data.currentTimeperiod,
+        currentTimeperiod: action.data.timeperiod,
       }
     default:
       return state
@@ -32,13 +32,13 @@ export const initializeMeasurements = user => {
       type: 'FETCH_SUCCESS',
       data: {
         measurements: measurements.data,
-        currentTimeperiod: 'Last 24 hours',
+        timeperiod: 'Last 24 hours',
       },
     })
   }
 }
 
-export const getTimeperiod = (period, currentTimeperiod) => {
+export const getTimeperiod = timeperiod => {
   return async (dispatch, getState) => {
     dispatch({
       type: 'INIT_FETCH',
@@ -47,14 +47,14 @@ export const getTimeperiod = (period, currentTimeperiod) => {
       user: { username },
     } = getState()
     const measurements = await measurementService.getTimeperiod(
-      period,
+      timeperiod,
       username
     )
     dispatch({
       type: 'FETCH_SUCCESS',
       data: {
         measurements: measurements.data,
-        currentTimeperiod,
+        timeperiod: timeperiod
       },
     })
   }

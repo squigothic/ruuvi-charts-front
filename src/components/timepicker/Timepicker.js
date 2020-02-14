@@ -89,7 +89,6 @@ const Timepicker = ({ getTimeperiod, showNotification, notification }) => {
 
   const handleSubmit = event => {
     event.preventDefault()
-    const tz = getAndformatTimezone()
     const beginning = `20${year}-${month}-${day}T${hour}:00:00${getAndformatTimezone()}`
     const end = `20${endyear}-${endmonth}-${endday}T${endhour}:00:00${getAndformatTimezone()}`
     if (!checkDateValidity(beginning, end)) {
@@ -104,7 +103,7 @@ const Timepicker = ({ getTimeperiod, showNotification, notification }) => {
       beginning,
       end,
     }
-    getTimeperiod(timeperiod, 'Giggels')
+    getTimeperiod(timeperiod)
   }
 
   return (
