@@ -47,14 +47,14 @@ const Datedisplay = ({ currentTimeperiod }) => {
     <Wrapper>
       <TitleContainer>
         <CurrentTimePeriod>Timeperiod: {currentTimeperiod?.beginning !== undefined
-          ? (formatTime(currentTimeperiod?.beginning) + ' - ' + formatTime(currentTimeperiod?.end))
+          ? (formatTime(currentTimeperiod?.beginning) + ' – ' + formatTime(currentTimeperiod?.end))
           : 'Last 24 hours'}
         </CurrentTimePeriod>
         <ToggleButton onClick={() => setPickerVisible(!pickerVisible)}>
           Pick date
         </ToggleButton>
       </TitleContainer>
-      {pickerVisible ? <Timepicker /> : null}
+      {pickerVisible ? <Timepicker toggle={setPickerVisible} /> : null}
     </Wrapper>
   )
 }
