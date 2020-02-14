@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Line } from 'react-chartjs-2'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 const ChartData = styled.div`
+  z-index: 999;
 `
 
 const Chart = ({ measurements }) => {
@@ -52,40 +54,51 @@ const Chart = ({ measurements }) => {
   }
 
   const options = {
-    title: {
-      display: false,
-      text: 'Lämpötila ja suhteellinen ilmankosteus',
+    title: null,
+    chart: {
+      type: 'line',
+      spacing: [10, 5, 15, 5]
     },
-    legend: {
-      display: false,
+    yAxis: [{
+      title: {
+        text: null
+      },
+      minorTickInterval: 'auto'
+    }, {
+      opposite: true,
+      title: {
+        text: null
+      },
+      minorTickInterval: 'auto'
+    }],
+    xAxis: {
+      categories: hoursMinutes,
+      gridLineWidth: 1,
+      type: 'datetime'
     },
-    scales: {
-      yAxes: [
-        {
-          type: 'linear',
-          position: 'right',
-          id: 'tempAxis',
-          ticks: {
-            max: maxValue,
-            min: minValue,
-          }
-        },
-        {
-          type: 'linear',
-          position: 'left',
-          id: 'humAxis',
-          // ticks: {
-          //   max:101,
-          //   min: 80
-          // }
-        },
-      ],
-    },
+    series: [{
+      yAxis: 0,
+      data: humValues,
+      color: '#2d5e84',
+      lineWidth: 2,
+      name: 'Humidity',
+
+    }, {
+      yAxis: 1,
+      data: tempValues,
+      color: '#ff6384',
+      lineWidth: 2,
+      name: 'Temperature'
+    }
+    ]
   }
 
   return (
     <ChartData>
-      <Line data={data} options={options} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+      />
     </ChartData>
   )
 }
