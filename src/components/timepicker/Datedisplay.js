@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background: #e8ecef;
+  z-index: 1;
 `
 
 const TitleContainer = styled.div`
