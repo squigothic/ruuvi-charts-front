@@ -32,7 +32,7 @@ const Chart = ({ measurements }) => {
     chart: {
       type: 'spline',
       spacing: [10, 15, 15, 10],
-      // alignTicks: false
+      alignTicks: false
       //spacing: [10, 5, 15, 5]
     },
     plotOptions: {
