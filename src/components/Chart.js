@@ -5,6 +5,8 @@ import HighchartsReact from 'highcharts-react-official'
 
 require('highcharts/modules/exporting')(Highcharts)
 require('highcharts/modules/export-data')(Highcharts)
+require('highcharts/modules/data')(Highcharts)
+
 
 const ChartData = styled.div`
 `
@@ -13,49 +15,78 @@ const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)
   const humValues = measurements.map(measure => measure.humidity)
   const timestamps = measurements.map(
-    measure => new Date(measure.timestamp * 1000)
+    measure => measure.timestamp * 1000
   )
-  const hoursMinutes = timestamps.map(
-    date => date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2)
-  )
+
+  const tempData = []
+  const humData = []
+  for (let i = 0; i < timestamps.length; i++) {
+    tempData.push([timestamps[i], tempValues[i]])
+    humData.push([timestamps[i], humValues[i]])
+  }
+
+
 
   const options = {
     title: null,
     chart: {
-      type: 'line',
-      spacing: [10, 5, 15, 5]
+      type: 'spline',
+      spacing: [10, 15, 15, 10],
+      // alignTicks: false
+      //spacing: [10, 5, 15, 5]
+    },
+    plotOptions: {
+      series: {
+        states: {
+          inactive: {
+            opacity: 1
+          }
+        }
+      }
     },
     yAxis: [{
       title: {
         text: null
       },
-      minorTickInterval: 'auto',
+      clip: false
     }, {
       opposite: true,
       title: {
         text: null
       },
-      minorTickInterval: 'auto'
+      clip: false
     }],
     xAxis: {
-      categories: hoursMinutes,
-      gridLineWidth: 1,
-      type: 'datetime'
+      type: 'datetime',
+      dateTimeLabelFormats: {
+        day: '%e. %b.',
+        week: '%e. %b.',
+        month: '%m/%y',
+        hour: '%H:%M'
+      },
+      minorTicks: true
     },
-    series: [{
-      yAxis: 0,
-      data: humValues,
-      color: '#2d5e84',
-      lineWidth: 2,
-      name: 'Humidity',
-
-    }, {
-      yAxis: 1,
-      data: tempValues,
-      color: '#ff6384',
-      lineWidth: 2,
-      name: 'Temperature'
-    }
+    series: [
+      {
+        data: tempData,
+        yAxis: 1,
+        color: '#ff6384',
+        lineWidth: 3,
+        name: 'Temperature',
+        marker: {
+          enabled: false
+        }
+      },
+      {
+        data: humData,
+        yAxis: 0,
+        color: '#2d5e84',
+        lineWidth: 3,
+        name: 'Humidity',
+        marker: {
+          enabled: false
+        }
+      }
     ]
   }
 
