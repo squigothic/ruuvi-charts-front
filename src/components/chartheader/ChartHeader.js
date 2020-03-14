@@ -14,7 +14,7 @@ const ChartDataWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: #e8ecef;
-  padding: 5px 0 5px 5px;
+  padding: 5px 0 0px 5px;
 `
 
 const ChartTitle = styled.h4`
@@ -24,13 +24,13 @@ const ChartTitle = styled.h4`
   }
   margin: 5px 5px 2px 0;
   padding-left: 5px;
-  color: #3089af;
+  color: #274262;
   font-family: helvetica;
 `
 
 const LatestData = styled.div`
   color: #4e4e4e;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 20px;
   font-family: helvetica;
   font-weight: 550;
@@ -41,6 +41,7 @@ const InfoLineWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding-right: 10px;
+  margin-bottom: 5px;
 `
 
 const HiliteNumber = styled.span`
@@ -58,10 +59,7 @@ const ToggleButton = styled.div`
 
 const ChartHeader = ({
   name,
-  latestHum,
-  latestTemp,
-  averageTemp,
-  averageHum,
+  data,
   setTimescale,
 }) => {
   const [togglable, setTogglable] = useState(false)
@@ -70,6 +68,8 @@ const ChartHeader = ({
     setTogglable(!togglable)
   }
 
+  console.log('data: ', data)
+
   return (
     <ChartHeaderWrapper>
       <ChartTitle>{name}</ChartTitle>
@@ -77,9 +77,9 @@ const ChartHeader = ({
         <InfoLineWrapper>
           <LatestData>
             Temperature:
-          <HiliteNumber color="#e55977">{latestTemp} &deg;C</HiliteNumber>
+          <HiliteNumber color="#e55977">{data.latestTemp} &deg;C</HiliteNumber>
             Humidity:
-          <HiliteNumber color="#2d5e84">{latestHum} %</HiliteNumber>
+          <HiliteNumber color="#2d5e84">{data.latestHum} %</HiliteNumber>
 
           </LatestData>
           <ToggleButton onClick={handleClick}>
@@ -87,7 +87,7 @@ const ChartHeader = ({
           </ToggleButton>
         </InfoLineWrapper>
         {togglable && (
-          <ExtraInfo averageTemp={averageTemp} averageHum={averageHum} />
+          <ExtraInfo data={data} />
         )}
       </ChartDataWrapper>
       <TimescaleSelector setTimescale={setTimescale} />

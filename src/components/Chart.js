@@ -1,101 +1,91 @@
 import React from 'react'
 import styled from 'styled-components'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-
-require('highcharts/modules/exporting')(Highcharts)
-require('highcharts/modules/export-data')(Highcharts)
-require('highcharts/modules/data')(Highcharts)
-
+import { Line } from 'react-chartjs-2'
 
 const ChartData = styled.div`
 `
 
 const Chart = ({ measurements }) => {
   const tempValues = measurements.map(measure => measure.temperature)
-  const humValues = measurements.map(measure => measure.humidity)
+  const humValues = measurements.map(measure => measure.relativehumidity)
   const timestamps = measurements.map(
-    measure => measure.timestamp * 1000
+    measure => new Date(measure.timestamp * 1000)
+  )
+  const hoursMinutes = timestamps.map(
+    date => date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2)
   )
 
-  const tempData = []
-  const humData = []
-  for (let i = 0; i < timestamps.length; i++) {
-    tempData.push([timestamps[i], tempValues[i]])
-    humData.push([timestamps[i], humValues[i]])
+  let minValue = Math.min(...tempValues)
+  let maxValue = Math.max(...tempValues)
+
+
+  if (maxValue - minValue < 1) {
+    const change = (1 - (maxValue - minValue)) / 2
+    minValue -= change
+    maxValue += change
   }
 
-
+  const data = {
+    labels: hoursMinutes,
+    datasets: [
+      {
+        label: 'Lämpötila',
+        yAxisID: 'tempAxis',
+        borderColor: 'rgb(255, 99, 132)',
+        fill: false,
+        data: tempValues,
+        borderWidth: 3,
+        pointRadius: 0,
+        pointHitRadius: 10,
+      },
+      {
+        label: 'Ilmankosteus',
+        yAxisID: 'humAxis',
+        borderColor: 'rgb(45, 94, 132)',
+        fill: false,
+        data: humValues,
+        borderWidth: 3,
+        pointRadius: 0,
+        pointHitRadius: 10,
+      },
+    ],
+  }
 
   const options = {
-    title: null,
-    chart: {
-      type: 'spline',
-      spacing: [10, 15, 15, 10],
-      alignTicks: false
-      //spacing: [10, 5, 15, 5]
+    title: {
+      display: false,
+      text: 'Lämpötila ja suhteellinen ilmankosteus',
     },
-    plotOptions: {
-      series: {
-        states: {
-          inactive: {
-            opacity: 1
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [
+        {
+          type: 'linear',
+          position: 'right',
+          id: 'tempAxis',
+          ticks: {
+            max: maxValue,
+            min: minValue,
           }
-        }
-      }
+        },
+        {
+          type: 'linear',
+          position: 'left',
+          id: 'humAxis',
+          // ticks: {
+          //   max:101,
+          //   min: 80
+          // }
+        },
+      ],
     },
-    yAxis: [{
-      title: {
-        text: null
-      },
-      clip: false
-    }, {
-      opposite: true,
-      title: {
-        text: null
-      },
-      clip: false
-    }],
-    xAxis: {
-      type: 'datetime',
-      dateTimeLabelFormats: {
-        day: '%e. %b.',
-        week: '%e. %b.',
-        month: '%m/%y',
-        hour: '%H:%M'
-      },
-      minorTicks: true
-    },
-    series: [
-      {
-        data: tempData,
-        yAxis: 1,
-        color: '#ff6384',
-        lineWidth: 3,
-        name: 'Temperature',
-        marker: {
-          enabled: false
-        }
-      },
-      {
-        data: humData,
-        yAxis: 0,
-        color: '#2d5e84',
-        lineWidth: 3,
-        name: 'Humidity',
-        marker: {
-          enabled: false
-        }
-      }
-    ]
   }
 
   return (
     <ChartData>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-      />
+      <Line data={data} options={options} />
     </ChartData>
   )
 }
