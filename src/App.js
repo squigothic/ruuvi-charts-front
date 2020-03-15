@@ -6,7 +6,7 @@ import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
-import { initUser, logoutUser, setUser } from './reducers/userReducer'
+import { loginUser, logoutUser, setUser } from './reducers/userReducer'
 
 const PageWrapper = styled.div`
 
@@ -22,13 +22,14 @@ const MainContent = styled.div`
 `
 
 const App = ({
-  initUser,
+  loginUser,
   user,
   logoutUser,
   measurements,
   loading,
   setUser,
   currentTimeperiod,
+  isLoggingIn
 }) => {
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
@@ -39,8 +40,8 @@ const App = ({
     <PageWrapper>
       <Heading logout={logoutUser} user={user} />
 
-      {!user ? (
-        <Login login={initUser} />
+      {user === null ? (
+        <Login login={loginUser} />
       ) : (
           <>
             <Datedisplay currentTimeperiod={currentTimeperiod} />
@@ -54,7 +55,7 @@ const App = ({
                   />
                 ))
               ) : (
-                  <Loading />
+                  <Loading text={'Loading...'} />
                 )}
             </MainContent>
           </>
@@ -69,11 +70,12 @@ const mapStateToProps = state => {
     currentTimeperiod: state.measurements.currentTimeperiod,
     user: state.user,
     loading: state.measurements.isFetching,
+    loggingIn: state.user?.isLoggingIn
   }
 }
 
 const mapDispatchToProps = {
-  initUser,
+  loginUser,
   logoutUser,
   setUser,
 }

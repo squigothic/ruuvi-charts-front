@@ -1,27 +1,34 @@
 import { initializeMeasurements } from './measurementsReducer'
 import { login } from '../services/loginservice'
 
-const userReducer = (state = null, action) => {
+const initialState = { username: null, isLoggingIn: false }
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'INIT_USER':
-      return action.data
+    case 'INIT_LOGIN':
+      return { ...state, isLoggingIn: true }
+    case 'LOGIN_USER':
+      return { ...action.data, isLoggingIn: false }
     case 'SET_USER':
       return action.data
-    case 'LOGOUT':
+    case 'LOGOUT_USER':
       return null
     default:
       return state
   }
 }
 
-export const initUser = credentials => {
+export const loginUser = credentials => {
   return async dispatch => {
     try {
+      dispatch({
+        type: 'INIT_LOGIN'
+      })
       const response = await login(credentials)
       const user = { username: response.data.username, token: response.data.token }
       dispatch({
-        type: 'INIT_USER',
-        data: user,
+        type: 'LOGIN_USER',
+        data: user
       })
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(initializeMeasurements(user.username))
@@ -34,7 +41,7 @@ export const initUser = credentials => {
 export const logoutUser = () => {
   window.localStorage.clear()
   return {
-    type: 'LOGOUT',
+    type: 'LOGOUT_USER',
     data: null,
   }
 }
