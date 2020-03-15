@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const AnimationWrapper = styled.div`
-  width: 30%;
-  margin: 0 auto;
   padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const LoadingText = styled.h2`

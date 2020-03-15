@@ -29,8 +29,6 @@ const RuuviChart = ({ data, name }) => {
     data = data.filter(measurement => measurement.timestamp > beginTime)
   }
 
-  console.log('data: ', data)
-
   return (
     <ChartWrapper>
       <ChartHeader
