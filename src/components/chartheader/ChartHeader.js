@@ -34,6 +34,9 @@ const LatestData = styled.div`
   line-height: 20px;
   font-family: helvetica;
   font-weight: 550;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }  
   
 `
 const InfoLineWrapper = styled.div`
@@ -48,6 +51,9 @@ const HiliteNumber = styled.span`
   color: ${props => props.color};
   margin-left: 5px;
   margin-right: 15px;
+  @media (max-width: 768px) {
+    margin-right: 10px;
+  }  
 `
 
 const ToggleButton = styled.div`
@@ -55,6 +61,7 @@ const ToggleButton = styled.div`
   padding-left: 20px;
   display: inline-block;
   line-height: 20px;
+  font-family: helvetica;
 `
 
 const ChartHeader = ({
@@ -62,13 +69,11 @@ const ChartHeader = ({
   data,
   setTimescale,
 }) => {
-  const [togglable, setTogglable] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
   const handleClick = () => {
-    setTogglable(!togglable)
+    setExpanded(!expanded)
   }
-
-  console.log('data: ', data)
 
   return (
     <ChartHeaderWrapper>
@@ -83,10 +88,10 @@ const ChartHeader = ({
 
           </LatestData>
           <ToggleButton onClick={handleClick}>
-            {togglable ? '▲' : '▼'}
+            {expanded ? ' Show less ▲' : 'Show more ▼'}
           </ToggleButton>
         </InfoLineWrapper>
-        {togglable && (
+        {expanded && (
           <ExtraInfo data={data} />
         )}
       </ChartDataWrapper>

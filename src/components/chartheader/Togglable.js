@@ -8,6 +8,9 @@ const ExtraInfoWrapper = styled.div`
   font-family: helvetica;
   font-weight: 550;
   border-left: 4px solid #274262;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }  
 `
 
 const LineWrapper = styled.div`
@@ -23,19 +26,19 @@ const HiliteNumber = styled.span`
 const ExtraInfo = ({ data }) => (
   <ExtraInfoWrapper>
     <LineWrapper>
-      Averages for selected timeperiod:
+      Average:
       <HiliteNumber color="#e55977">{data.averageTemp} &deg;C</HiliteNumber>
       |
       <HiliteNumber color="#2d5e84">{data.averageHum} %</HiliteNumber>
     </LineWrapper>
     <LineWrapper>
-      Minimums for selected timeperiod:
+      Minimum:
       <HiliteNumber color="#e55977">{data.lowestTemp} &deg;C</HiliteNumber>
       |
       <HiliteNumber color="#2d5e84">{data.lowestHum} %</HiliteNumber>
     </LineWrapper>
     <LineWrapper>
-      Maximums for selected timeperiod:
+      Maximum:
       <HiliteNumber color="#e55977">{data.highestTemp} &deg;C</HiliteNumber>
       |
       <HiliteNumber color="#2d5e84">{data.highestHum} %</HiliteNumber>

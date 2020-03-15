@@ -32,9 +32,11 @@ const App = ({
     savedUser && setUser(JSON.parse(savedUser))
   }, [setUser])
 
+  console.log('user: ', user)
+
   return (
     <PageWrapper>
-      <Heading logout={logoutUser} />
+      <Heading logout={logoutUser} username={user?.username} />
 
       {!user ? (
         <Login login={initUser} />

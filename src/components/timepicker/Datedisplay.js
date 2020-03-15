@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import Timepicker from './Timepicker'
 
 const Wrapper = styled.div`
-  height: 60px;
-  padding: 0 5px;
+  padding: 5px 5px;
   font-family: 'Helvetica', sans-serif;
   position: sticky;
   top: 0;
   background: #e8ecef;
   z-index: 1;
+  border-bottom: 2px solid #274262;
 `
 
 const TitleContainer = styled.div`
@@ -18,7 +18,7 @@ const TitleContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  font-size: 16px; 
 `
 
 const ToggleButton = styled.button`
@@ -31,6 +31,9 @@ const ToggleButton = styled.button`
 
 const CurrentTimePeriod = styled.span`
   font-size: 16px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  } 
 `
 
 const Datedisplay = ({ currentTimeperiod }) => {
@@ -41,7 +44,8 @@ const Datedisplay = ({ currentTimeperiod }) => {
     if (!dateString) {
       return null
     }
-    return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)} ${date.getHours()}:00`
+    // removed ${date.getHours()}:00
+    return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)}`
   }
 
   return (
