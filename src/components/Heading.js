@@ -33,7 +33,12 @@ const Title = styled.h2`
   }  
 `
 
-const ButtonWrapper = styled.button`
+const UserMetaWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const LogoutButton = styled.button`
   height: 23px;
   background: white;
   border: 2px solid #274262;
@@ -41,13 +46,26 @@ const ButtonWrapper = styled.button`
   color: #274262;
 `
 
-const Heading = ({ logout }) => {
+const UserInfo = styled.div`
+  margin-right: 15px;
+  font-family: 'Helvetica', sans-serif;
+  color: #274262;
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-right: 8px;
+  }  
+`
+
+const Heading = ({ logout, username }) => {
   return (
     <HeaderContainer>
       <ContentWrapper>
         <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
-          <ButtonWrapper onClick={() => logout()}>Logout</ButtonWrapper>
+          <UserMetaWrapper>
+            <UserInfo>Logged in as {username}</UserInfo>
+            <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
+          </UserMetaWrapper>
         </UpperRowWrapper>
       </ContentWrapper>
     </HeaderContainer>
