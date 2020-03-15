@@ -3,17 +3,29 @@ import styled from 'styled-components'
 
 const LoginBox = styled.div`
   background: lightgray;
-  height: 40px;
-  margin: 20px auto;
   padding: 10px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }  
+
+`
+
+const InputDescription = styled.h4`
+  font-size: 14px;
+  margin-bottom: 5px;
+`
+
+const ButtonWrapper = styled.div`
+  margin-top: 10px;
+  margin-bottom: 18px;
 `
 
 const Login = ({ login }) => {
-  const [newUser, setNewUser] = useState('insert username...')
-  const [password, setPassword] = useState('insert password...')
+  const [newUser, setNewUser] = useState('')
+  const [password, setPassword] = useState('')
 
   const submitUser = event => {
     event.preventDefault()
@@ -41,6 +53,7 @@ const Login = ({ login }) => {
   return (
     <LoginBox>
       <form onSubmit={submitUser}>
+        <InputDescription>Username</InputDescription>
         <input
           type="text"
           name="username"
@@ -48,6 +61,7 @@ const Login = ({ login }) => {
           onChange={handleFormChange}
           onClick={() => newUser === 'insert username...' && setNewUser('')}
         />
+        <InputDescription>Password</InputDescription>
         <input
           type="password"
           name="password"
@@ -55,7 +69,7 @@ const Login = ({ login }) => {
           onChange={handleFormChange}
           onClick={() => password === 'insert password...' && setPassword('')}
         />
-        <button type="submit">Login</button>
+        <ButtonWrapper><button type="submit">Login</button></ButtonWrapper>
       </form>
     </LoginBox>
   )

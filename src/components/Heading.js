@@ -56,16 +56,16 @@ const UserInfo = styled.div`
   }  
 `
 
-const Heading = ({ logout, username }) => {
+const Heading = ({ logout, user }) => {
   return (
     <HeaderContainer>
       <ContentWrapper>
         <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
-          <UserMetaWrapper>
-            <UserInfo>Logged in as {username}</UserInfo>
+          {user && (<UserMetaWrapper>
+            <UserInfo>Logged in as {user?.username}</UserInfo>
             <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
-          </UserMetaWrapper>
+          </UserMetaWrapper>)}
         </UpperRowWrapper>
       </ContentWrapper>
     </HeaderContainer>

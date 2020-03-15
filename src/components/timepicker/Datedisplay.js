@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   background: #e8ecef;
   z-index: 1;
   border-bottom: 2px solid #274262;
+  margin-bottom: 15px;
 `
 
 const TitleContainer = styled.div`

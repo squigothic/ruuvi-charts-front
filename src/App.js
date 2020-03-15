@@ -8,11 +8,14 @@ import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
 import { initUser, logoutUser, setUser } from './reducers/userReducer'
 
-const PageWrapper = styled.div``
+const PageWrapper = styled.div`
+
+  `
 
 const MainContent = styled.div`
   width: 90%;
   margin: auto;
+
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -32,11 +35,9 @@ const App = ({
     savedUser && setUser(JSON.parse(savedUser))
   }, [setUser])
 
-  console.log('user: ', user)
-
   return (
     <PageWrapper>
-      <Heading logout={logoutUser} username={user?.username} />
+      <Heading logout={logoutUser} user={user} />
 
       {!user ? (
         <Login login={initUser} />
