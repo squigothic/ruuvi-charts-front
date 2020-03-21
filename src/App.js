@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
@@ -21,32 +21,35 @@ const MainContent = styled.div`
   }
 `
 
-const App = ({
-  loginUser,
-  user,
-  logoutUser,
-  measurements,
-  loading,
-  setUser,
-  currentTimeperiod,
-  isLoggingIn
-}) => {
+const App = () => {
+
+  const dispatch = useDispatch()
+  const measurements = useSelector(state => state.measurements.data)
+  const currentTimeperiod = useSelector(state => state.measurements.currentTimeperiod)
+  const user = useSelector(state => state.user)
+  const loading = useSelector(state => state.loading.status)
+  const loadingText = useSelector(state => state.loading.message)
+
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
-    savedUser && setUser(JSON.parse(savedUser))
-  }, [setUser])
+    savedUser && dispatch(setUser(JSON.parse(savedUser)))
+  }, [dispatch])
+
+  const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch])
+  const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
+
 
   return (
     <PageWrapper>
-      <Heading logout={logoutUser} user={user} />
+      <Heading logout={doLogout} user={user?.username} />
 
       {user === null ? (
-        <Login login={loginUser} />
+        <Login login={doLogin} />
       ) : (
           <>
             <Datedisplay currentTimeperiod={currentTimeperiod} />
             <MainContent>
-              {!loading ? (
+              {loading === true ? <Loading content={loadingText} /> : (
                 measurements.map(tag => (
                   <RuuviChart
                     key={JSON.parse(tag[0].data).friendlyname}
@@ -54,9 +57,7 @@ const App = ({
                     name={JSON.parse(tag[tag.length - 1].data).friendlyname}
                   />
                 ))
-              ) : (
-                  <Loading text={'Loading...'} />
-                )}
+              )}
             </MainContent>
           </>
         )}
@@ -64,20 +65,4 @@ const App = ({
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    measurements: state.measurements.data,
-    currentTimeperiod: state.measurements.currentTimeperiod,
-    user: state.user,
-    loading: state.measurements.isFetching,
-    loggingIn: state.user?.isLoggingIn
-  }
-}
-
-const mapDispatchToProps = {
-  loginUser,
-  logoutUser,
-  setUser,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App

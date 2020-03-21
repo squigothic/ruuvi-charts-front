@@ -14,11 +14,10 @@ const LoadingText = styled.h2`
   font-family: monospace;
 `
 
-const Loading = ({ text }) => {
-  console.log('awawdawd')
+const Loading = ({ content }) => {
   return (
     <AnimationWrapper>
-      <LoadingText>{text}</LoadingText>
+      <LoadingText>{content}</LoadingText>
     </AnimationWrapper>
   )
 }

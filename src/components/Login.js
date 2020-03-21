@@ -28,6 +28,7 @@ const Login = ({ login }) => {
   const [password, setPassword] = useState('')
 
   const submitUser = event => {
+    console.log('event: ', newUser, ' ', password)
     event.preventDefault()
     login({
       'username': newUser.toLowerCase(),
