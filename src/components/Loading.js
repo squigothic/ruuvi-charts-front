@@ -5,13 +5,16 @@ const AnimationWrapper = styled.div`
   padding-top: 40px;
   display: flex;
   justify-content: center;
-  align-items: center;
+
 `
 
 const LoadingText = styled.h2`
   font-size: 30px;
   color: #274262;
   font-family: monospace;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `
 
 const Loading = ({ text }) => {

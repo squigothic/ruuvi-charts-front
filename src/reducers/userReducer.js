@@ -9,7 +9,6 @@ const userReducer = (state = null, action) => {
     case 'SET_USER':
       return action.data
     case 'LOGOUT_USER':
-      console.log('asettaan null reducerissa')
       return null
     default:
       return state
