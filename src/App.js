@@ -8,9 +8,7 @@ import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
 import { loginUser, logoutUser, setUser } from './reducers/userReducer'
 
-const PageWrapper = styled.div`
-
-  `
+const PageWrapper = styled.div``
 
 const MainContent = styled.div`
   width: 90%;
@@ -27,8 +25,7 @@ const App = () => {
   const measurements = useSelector(state => state.measurements.data)
   const currentTimeperiod = useSelector(state => state.measurements.currentTimeperiod)
   const user = useSelector(state => state.user)
-  const loading = useSelector(state => state.loading.status)
-  const loadingText = useSelector(state => state.loading.message)
+  const loading = useSelector(state => state.loading)
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
@@ -38,30 +35,32 @@ const App = () => {
   const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch])
   const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
 
+  if (user === null) {
+    return <Login login={doLogin} />
+  }
+
+  const selectComponent = loadingStatus => {
+    if (loadingStatus === 'true') {
+      return <Loading text={loading.message} />
+    } else {
+      return measurements.map(tag => (
+        <RuuviChart
+          key={JSON.parse(tag[0].data).friendlyname}
+          data={tag.map(measurement => JSON.parse(measurement.data))}
+          name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+        />
+      ))
+    }
+  }
 
   return (
     <PageWrapper>
       <Heading logout={doLogout} user={user?.username} />
-
-      {user === null ? (
-        <Login login={doLogin} />
-      ) : (
-          <>
-            <Datedisplay currentTimeperiod={currentTimeperiod} />
-            <MainContent>
-              {loading === true ? <Loading content={loadingText} /> : (
-                measurements.map(tag => (
-                  <RuuviChart
-                    key={JSON.parse(tag[0].data).friendlyname}
-                    data={tag.map(measurement => JSON.parse(measurement.data))}
-                    name={JSON.parse(tag[tag.length - 1].data).friendlyname}
-                  />
-                ))
-              )}
-            </MainContent>
-          </>
-        )}
-    </PageWrapper>
+      <Datedisplay currentTimeperiod={currentTimeperiod} />
+      <MainContent>
+        {selectComponent(loading.status)}
+      </MainContent>
+    </PageWrapper >
   )
 }
 
