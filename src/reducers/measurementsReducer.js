@@ -1,16 +1,15 @@
 import measurementService from '../services/measurements'
+import { changeLoadingStatus } from './loadingStateReducer'
+
 
 const initialState = { data: [] }
 
 const measurementsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'INIT_FETCH':
-      return { ...state, isFetching: true }
     case 'FETCH_SUCCESS':
       return {
         ...state,
         data: action.data.measurements,
-        isFetching: false,
         currentTimeperiod: action.data.timeperiod,
       }
     default:
@@ -20,9 +19,7 @@ const measurementsReducer = (state = initialState, action) => {
 
 export const initializeMeasurements = user => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: 'INIT_FETCH',
-    })
+    dispatch(changeLoadingStatus('true', 'Loading measurements...'))
     const {
       user: { token },
     } = getState()
@@ -35,14 +32,14 @@ export const initializeMeasurements = user => {
         timeperiod: 'Last 24 hours',
       },
     })
+    dispatch(changeLoadingStatus('false', ''))
+
   }
 }
 
 export const getTimeperiod = timeperiod => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: 'INIT_FETCH',
-    })
+    dispatch(changeLoadingStatus('true', 'Loading measurements...'))
     const {
       user: { username },
     } = getState()
@@ -57,6 +54,7 @@ export const getTimeperiod = timeperiod => {
         timeperiod: timeperiod
       },
     })
+    dispatch(changeLoadingStatus('false', ''))
   }
 }
 

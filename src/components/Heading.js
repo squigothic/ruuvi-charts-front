@@ -63,7 +63,7 @@ const Heading = ({ logout, user }) => {
         <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
           {user && (<UserMetaWrapper>
-            <UserInfo>Logged in as {user?.username}</UserInfo>
+            <UserInfo>Logged in as {user}</UserInfo>
             <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
           </UserMetaWrapper>)}
         </UpperRowWrapper>

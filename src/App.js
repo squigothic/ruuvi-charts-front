@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import RuuviChart from './components/RuuviChart'
 import Heading from './components/Heading'
 import Loading from './components/Loading'
 import Login from './components/Login'
 import Datedisplay from './components/timepicker/Datedisplay'
-import { initUser, logoutUser, setUser } from './reducers/userReducer'
+import { loginUser, logoutUser, setUser } from './reducers/userReducer'
 
-const PageWrapper = styled.div`
-
-  `
+const PageWrapper = styled.div``
 
 const MainContent = styled.div`
   width: 90%;
@@ -21,61 +19,49 @@ const MainContent = styled.div`
   }
 `
 
-const App = ({
-  initUser,
-  user,
-  logoutUser,
-  measurements,
-  loading,
-  setUser,
-  currentTimeperiod,
-}) => {
+const App = () => {
+
+  const dispatch = useDispatch()
+  const measurements = useSelector(state => state.measurements.data)
+  const currentTimeperiod = useSelector(state => state.measurements.currentTimeperiod)
+  const user = useSelector(state => state.user)
+  const loading = useSelector(state => state.loading)
+
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
-    savedUser && setUser(JSON.parse(savedUser))
-  }, [setUser])
+    savedUser && dispatch(setUser(JSON.parse(savedUser)))
+  }, [dispatch])
+
+  const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch])
+  const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
+
+  if (user === null) {
+    return <Login login={doLogin} />
+  }
+
+  const selectComponent = loadingStatus => {
+    if (loadingStatus === 'true') {
+      return <Loading text={loading.message} />
+    } else {
+      return measurements.map(tag => (
+        <RuuviChart
+          key={JSON.parse(tag[0].data).friendlyname}
+          data={tag.map(measurement => JSON.parse(measurement.data))}
+          name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+        />
+      ))
+    }
+  }
 
   return (
     <PageWrapper>
-      <Heading logout={logoutUser} user={user} />
-
-      {!user ? (
-        <Login login={initUser} />
-      ) : (
-          <>
-            <Datedisplay currentTimeperiod={currentTimeperiod} />
-            <MainContent>
-              {!loading ? (
-                measurements.map(tag => (
-                  <RuuviChart
-                    key={JSON.parse(tag[0].data).friendlyname}
-                    data={tag.map(measurement => JSON.parse(measurement.data))}
-                    name={JSON.parse(tag[tag.length - 1].data).friendlyname}
-                  />
-                ))
-              ) : (
-                  <Loading />
-                )}
-            </MainContent>
-          </>
-        )}
-    </PageWrapper>
+      <Heading logout={doLogout} user={user?.username} />
+      <Datedisplay currentTimeperiod={currentTimeperiod} />
+      <MainContent>
+        {selectComponent(loading.status)}
+      </MainContent>
+    </PageWrapper >
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    measurements: state.measurements.data,
-    currentTimeperiod: state.measurements.currentTimeperiod,
-    user: state.user,
-    loading: state.measurements.isFetching,
-  }
-}
-
-const mapDispatchToProps = {
-  initUser,
-  logoutUser,
-  setUser,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App

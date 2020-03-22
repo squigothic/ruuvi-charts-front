@@ -11,6 +11,8 @@ const ChartWrapper = styled.div`
 const RuuviChart = ({ data, name }) => {
   const [timeScale, setTimescale] = useState(24)
 
+  console.log('piirretään charttia')
+
   const calculateHeaderData = () => {
     const latestTemp = data[data.length - 1].temperature
     const latestHum = data[data.length - 1].humidity
