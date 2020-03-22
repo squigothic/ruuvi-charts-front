@@ -35,6 +35,9 @@ const Chart = ({ measurements }) => {
       alignTicks: false
       //spacing: [10, 5, 15, 5]
     },
+    time: {
+      timezoneOffset: new Date().getTimezoneOffset()
+    },
     plotOptions: {
       series: {
         states: {
