@@ -10,6 +10,19 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
+const handleError = (error) => {
+  if (error.response) {
+    console.log('response error')
+    console.log(error.response.data)
+    console.log(error.response.status)
+  } else if (error.request) {
+    console.log('request error: ')
+    console.log(error.request)
+  } else {
+    console.log('Error: ', error.message)
+  }
+}
+
 const getTimeperiod = async (period, user) => {
   const config = {
     headers: { Authorization: token },
@@ -18,7 +31,7 @@ const getTimeperiod = async (period, user) => {
     const response = await axios.post(`${baseUrl}/${user}`, period, config)
     return response
   } catch (error) {
-    console.log('error: ', error)
+    handleError(error)
   }
 }
 
@@ -31,16 +44,7 @@ const getAll = async user => {
     const response = await axios.get(`${baseUrl}/${user}`, config)
     return response
   } catch (error) {
-    if (error.response) {
-      console.log('response error')
-      console.log(error.response.data)
-      console.log(error.response.status)
-    } else if (error.request) {
-      console.log('request error: ')
-      console.log(error.request)
-    } else {
-      console.log('Error: ', error.message)
-    }
+    handleError(error)
   }
 }
 

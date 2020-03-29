@@ -36,6 +36,9 @@ const App = () => {
   const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
 
   if (user === null) {
+    if (loading.status === 'true') {
+      return <Loading text={loading.message} />
+    }
     return <Login login={doLogin} />
   }
 
