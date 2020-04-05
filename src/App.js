@@ -29,6 +29,7 @@ const App = () => {
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
+    // const savedUser = { username: 'squi', token: 'awdwokgreawdo' }
     savedUser && dispatch(setUser(JSON.parse(savedUser)))
   }, [dispatch])
 
@@ -36,6 +37,9 @@ const App = () => {
   const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
 
   if (user === null) {
+    if (loading.status === 'true') {
+      return <Loading text={loading.message} />
+    }
     return <Login login={doLogin} />
   }
 

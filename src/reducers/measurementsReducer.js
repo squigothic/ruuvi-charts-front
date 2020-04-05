@@ -1,5 +1,7 @@
 import measurementService from '../services/measurements'
 import { changeLoadingStatus } from './loadingStateReducer'
+import { logoutUser } from './userReducer'
+import { showNotification } from './notificationReducer'
 
 
 const initialState = { data: [] }
@@ -19,21 +21,28 @@ const measurementsReducer = (state = initialState, action) => {
 
 export const initializeMeasurements = user => {
   return async (dispatch, getState) => {
-    dispatch(changeLoadingStatus('true', 'Loading measurements...'))
-    const {
-      user: { token },
-    } = getState()
-    measurementService.setToken(token)
-    const measurements = await measurementService.getAll(user)
-    dispatch({
-      type: 'FETCH_SUCCESS',
-      data: {
-        measurements: measurements.data,
-        timeperiod: 'Last 24 hours',
-      },
-    })
-    dispatch(changeLoadingStatus('false', ''))
-
+    try {
+      dispatch(changeLoadingStatus('true', 'Loading measurements...'))
+      const {
+        user: { token },
+      } = getState()
+      measurementService.setToken(token)
+      const measurements = await measurementService.getAll(user)
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        data: {
+          measurements: measurements.data,
+          timeperiod: 'Last 24 hours',
+        },
+      })
+      dispatch(changeLoadingStatus('false', ''))
+    } catch (error) {
+      dispatch(changeLoadingStatus('false', ''))
+      console.log('response error')
+      console.log(error.response.status)
+      dispatch(logoutUser())
+      dispatch(showNotification('An error occurred, try logging in again', 4))
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+// import store from '../store'
+// import { logoutUser } from '../reducers/userReducer'
+
 const baseUrl = 'https://nameless-river-83647.herokuapp.com/measurements'
 //const baseUrl = 'https://subdomain.marakassi.com/measurements'
 //const baseUrl = 'http://192.168.100.196:8080/measurements'
@@ -14,12 +17,9 @@ const getTimeperiod = async (period, user) => {
   const config = {
     headers: { Authorization: token },
   }
-  try {
-    const response = await axios.post(`${baseUrl}/${user}`, period, config)
-    return response
-  } catch (error) {
-    console.log('error: ', error)
-  }
+
+  const response = await axios.post(`${baseUrl}/${user}`, period, config)
+  return response
 }
 
 const getAll = async user => {
@@ -27,21 +27,9 @@ const getAll = async user => {
   const config = {
     headers: { Authorization: token },
   }
-  try {
-    const response = await axios.get(`${baseUrl}/${user}`, config)
-    return response
-  } catch (error) {
-    if (error.response) {
-      console.log('response error')
-      console.log(error.response.data)
-      console.log(error.response.status)
-    } else if (error.request) {
-      console.log('request error: ')
-      console.log(error.request)
-    } else {
-      console.log('Error: ', error.message)
-    }
-  }
+
+  const response = await axios.get(`${baseUrl}/${user}`, config)
+  return response
 }
 
 export default { getAll, setToken, getTimeperiod }

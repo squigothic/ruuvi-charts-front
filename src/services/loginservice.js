@@ -5,10 +5,7 @@ const baseUrl = 'https://nameless-river-83647.herokuapp.com/login'
 
 export const login = async user => {
   console.log('credentials: ', user)
-  try {
-    const response = await axios.post(baseUrl, user)
-    return response
-  } catch (error) {
-    console.log('Error: ', error)
-  }
+  const response = await axios.post(baseUrl, user)
+  return response
 }
+
