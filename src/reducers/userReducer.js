@@ -1,6 +1,7 @@
 import { initializeMeasurements } from './measurementsReducer'
 import { login } from '../services/loginservice'
 import { changeLoadingStatus } from './loadingStateReducer'
+import { showNotification } from './notificationReducer'
 
 const userReducer = (state = null, action) => {
   switch (action.type) {
@@ -20,6 +21,7 @@ export const loginUser = credentials => {
     try {
       dispatch(changeLoadingStatus('true', 'Logging in...'))
       const response = await login(credentials)
+      console.log('responssi: ', response)
       const user = { username: response.data.username, token: response.data.token }
       dispatch({
         type: 'LOGIN_USER',
@@ -28,7 +30,10 @@ export const loginUser = credentials => {
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(initializeMeasurements(user.username))
     } catch (error) {
-      console.log('error: ', error)
+      dispatch(changeLoadingStatus('false', ''))
+      console.log('response error')
+      console.log(error.response.status)
+      dispatch(showNotification('Wrong username or password', 4))
     }
   }
 }

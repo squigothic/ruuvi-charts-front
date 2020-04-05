@@ -1,9 +1,20 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const LoginBox = styled.div`
+import Notification from './Notification'
+import { useSelector } from 'react-redux'
+
+const Wrapper = styled.div`
   background: lightgray;
   padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 20% 0 20%;
+`
+
+const LoginBox = styled.div`
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +37,7 @@ const ButtonWrapper = styled.div`
 const Login = ({ login }) => {
   const [newUser, setNewUser] = useState('')
   const [password, setPassword] = useState('')
+  const notification = useSelector(state => state.notification)
 
   const submitUser = event => {
     console.log('event: ', newUser, ' ', password)
@@ -52,27 +64,32 @@ const Login = ({ login }) => {
   }
 
   return (
-    <LoginBox>
-      <form onSubmit={submitUser}>
-        <InputDescription>Username</InputDescription>
-        <input
-          type="text"
-          name="username"
-          value={newUser}
-          onChange={handleFormChange}
-          onClick={() => newUser === 'insert username...' && setNewUser('')}
-        />
-        <InputDescription>Password</InputDescription>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleFormChange}
-          onClick={() => password === 'insert password...' && setPassword('')}
-        />
-        <ButtonWrapper><button type="submit">Login</button></ButtonWrapper>
-      </form>
-    </LoginBox>
+    <Wrapper>
+      {notification.status === true && (
+        <Notification message={notification.content} />
+      )}
+      <LoginBox>
+        <form onSubmit={submitUser}>
+          <InputDescription>Username</InputDescription>
+          <input
+            type="text"
+            name="username"
+            value={newUser}
+            onChange={handleFormChange}
+            onClick={() => newUser === 'insert username...' && setNewUser('')}
+          />
+          <InputDescription>Password</InputDescription>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleFormChange}
+            onClick={() => password === 'insert password...' && setPassword('')}
+          />
+          <ButtonWrapper><button type="submit">Login</button></ButtonWrapper>
+        </form>
+      </LoginBox>
+    </Wrapper>
   )
 }
 
