@@ -8,11 +8,17 @@ const initialState = { data: [] }
 
 const measurementsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_SUCCESS':
+    case 'MEASUREMENTS_FETCH_SUCCESS':
       return {
         ...state,
-        data: action.data.measurements,
+        recurring: action.data.measurements,
         currentTimeperiod: action.data.timeperiod,
+      }
+    case 'AVERAGES_FETCH_SUCCESS':
+      return {
+        ...state,
+        average: action.data.averages,
+        currentTimeperiod: action.data.timeperiod
       }
     default:
       return state
@@ -27,12 +33,20 @@ export const initializeMeasurements = user => {
         user: { token },
       } = getState()
       measurementService.setToken(token)
-      const measurements = await measurementService.getAll(user)
+      const measurements = await measurementService.getLatestMeasurements(user)
       dispatch({
-        type: 'FETCH_SUCCESS',
+        type: 'MEASUREMENTS_FETCH_SUCCESS',
         data: {
           measurements: measurements.data,
           timeperiod: 'Last 24 hours',
+        },
+      })
+      const averages = await measurementService.getLatestAverages(user)
+      dispatch({
+        type: 'AVERAGES_FETCH_SUCCESS',
+        data: {
+          averages: averages.data,
+          timeperiod: 'Last 24 hours'
         },
       })
       dispatch(changeLoadingStatus('false', ''))
@@ -57,9 +71,27 @@ export const getTimeperiod = timeperiod => {
       username
     )
     dispatch({
-      type: 'FETCH_SUCCESS',
+      type: 'MEASUREMENTS_FETCH_SUCCESS',
       data: {
         measurements: measurements.data,
+        timeperiod: timeperiod
+      },
+    })
+    dispatch(changeLoadingStatus('false', ''))
+  }
+}
+
+export const getAverageForTimeperiod = timeperiod => {
+  return async (dispatch, getState) => {
+    dispatch(changeLoadingStatus('true', 'Loading averages...'))
+    const {
+      user: { username },
+    } = getState()
+    const averages = await measurementService.getAverages(timeperiod, username)
+    dispatch({
+      type: 'AVERAGES_FETCH_SUCCESS',
+      data: {
+        averages: averages.data,
         timeperiod: timeperiod
       },
     })
