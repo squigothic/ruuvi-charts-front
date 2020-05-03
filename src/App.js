@@ -29,7 +29,6 @@ const App = () => {
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('user')
-    // const savedUser = { username: 'squi', token: 'awdwokgreawdo' }
     savedUser && dispatch(setUser(JSON.parse(savedUser)))
   }, [dispatch])
 

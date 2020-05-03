@@ -74,7 +74,8 @@ const ChartHeader = ({
   name,
   data,
   setTimescale,
-  changeView
+  changeView,
+  selectedView
 }) => {
   const [expanded, setExpanded] = useState(false)
 
@@ -105,7 +106,7 @@ const ChartHeader = ({
           <ExtraInfo data={data} />
         )}
       </ChartDataWrapper>
-      <TimescaleSelector setTimescale={setTimescale} />
+      {selectedView === 'recurring' && <TimescaleSelector setTimescale={setTimescale} />}
     </ChartHeaderWrapper>
   )
 }

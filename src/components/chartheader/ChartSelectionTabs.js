@@ -4,15 +4,10 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-right: 10px;
-  
   height: 25px;
   align-self: flex-end;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
 `
 
 const Tab = styled.div`
@@ -22,7 +17,7 @@ const Tab = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.background ? '#e8ecef': 'white'};
+  background-color: ${props => props.background ? '#e8ecef': '#d7dce0'};
 `
 
 const ChartSelectionTabs = ({ changeView }) => {
