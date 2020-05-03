@@ -2,11 +2,17 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ExtraInfo from './Togglable'
 import TimescaleSelector from './TimescaleSelector'
+import ChartSelectionTabs from './ChartSelectionTabs'
 
 const ChartHeaderWrapper = styled.div`
   padding: 0.1em 0em;
   border-bottom: 2px solid #3089af;
   margin-bottom: 10px;
+`
+
+const TitleRowWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 const ChartDataWrapper = styled.div`
@@ -68,6 +74,7 @@ const ChartHeader = ({
   name,
   data,
   setTimescale,
+  changeView
 }) => {
   const [expanded, setExpanded] = useState(false)
 
@@ -77,7 +84,10 @@ const ChartHeader = ({
 
   return (
     <ChartHeaderWrapper>
+      <TitleRowWrapper>
       <ChartTitle>{name}</ChartTitle>
+      <ChartSelectionTabs changeView={changeView} />
+      </TitleRowWrapper>
       <ChartDataWrapper>
         <InfoLineWrapper>
           <LatestData>

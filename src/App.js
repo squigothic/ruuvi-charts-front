@@ -22,7 +22,7 @@ const MainContent = styled.div`
 const App = () => {
 
   const dispatch = useDispatch()
-  const measurements = useSelector(state => state.measurements.data)
+  const measurements = useSelector(state => state.measurements.recurring)
   const currentTimeperiod = useSelector(state => state.measurements.currentTimeperiod)
   const user = useSelector(state => state.user)
   const loading = useSelector(state => state.loading)
@@ -50,8 +50,8 @@ const App = () => {
       return measurements.map(tag => (
         <RuuviChart
           key={JSON.parse(tag[0].data).friendlyname}
-          data={tag.map(measurement => JSON.parse(measurement.data))}
-          name={JSON.parse(tag[tag.length - 1].data).friendlyname}
+          recurringMeasurements={tag.map(measurement => JSON.parse(measurement.data))}
+          tagFriendlyName={JSON.parse(tag[tag.length - 1].data).friendlyname}
         />
       ))
     }
