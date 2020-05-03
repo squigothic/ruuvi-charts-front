@@ -10,22 +10,18 @@ const ChartWrapper = styled.div`
   }
 `
 const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
-  const [dataToShow, setDataToShow] = useState(recurringMeasurements)
   const [timeScale, setTimescale] = useState(24)
+  const [selectedView, setSelectedView] = useState('recurring')
   const averageMeasurements = useSelector(({ measurements }) => {
     const datas = measurements.average.map(measurement => JSON.parse(measurement.data))
     return datas.filter(m => m.friendlyname === tagFriendlyName)
   })
 
-  useEffect(() => {
-    setDataToShow(recurringMeasurements)
-  }, [recurringMeasurements])
-
   const changeView = selection => {
     if (selection === 'recurring') {
-      setDataToShow(recurringMeasurements)
+      setSelectedView('recurring')
     } else {
-      setDataToShow(averageMeasurements)
+      setSelectedView('average')
     }
   }
 
@@ -47,17 +43,16 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
     recurringMeasurements = recurringMeasurements.filter(measurement => measurement.timestamp > beginTime)
   }
 
-  console.log('averages: ', averageMeasurements)
-
   return (
     <ChartWrapper>
       <ChartHeader
         name={tagFriendlyName}
-        data={calculateHeaderData(dataToShow)}
+        data={calculateHeaderData(selectedView === 'recurring' ? recurringMeasurements : averageMeasurements)}
         setTimescale={setTimescale}
         changeView={changeView}
+        selectedView={selectedView}
       />
-     <Chart measurements={dataToShow} />
+     <Chart measurements={selectedView === 'recurring' ? recurringMeasurements : averageMeasurements} />
     </ChartWrapper>
   )
 }
