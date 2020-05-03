@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Chart from './Chart'
-import AverageChart from './AverageChart'
 import ChartHeader from './chartheader/ChartHeader'
 
 const ChartWrapper = styled.div`
@@ -12,14 +11,9 @@ const ChartWrapper = styled.div`
 `
 const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
   const [dataToShow, setDataToShow] = useState(recurringMeasurements)
-  const [view, setView] = useState('recurring')
   const [timeScale, setTimescale] = useState(24)
   const averageMeasurements = useSelector(({ measurements }) => {
-    const datas = measurements.average.map(measurement => {
-      const data = JSON.parse(measurement.data)
-      data.date = measurement.date_tag.slice(0, 10)
-      return data
-    })
+    const datas = measurements.average.map(measurement => JSON.parse(measurement.data))
     return datas.filter(m => m.friendlyname === tagFriendlyName)
   })
 
@@ -28,12 +22,9 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
   }, [recurringMeasurements])
 
   const changeView = selection => {
-    console.log('handlataan klikkiä, view: ', selection)
     if (selection === 'recurring') {
-      setView('recurring')
       setDataToShow(recurringMeasurements)
     } else {
-      setView('averages')
       setDataToShow(averageMeasurements)
     }
   }
@@ -56,6 +47,8 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
     recurringMeasurements = recurringMeasurements.filter(measurement => measurement.timestamp > beginTime)
   }
 
+  console.log('averages: ', averageMeasurements)
+
   return (
     <ChartWrapper>
       <ChartHeader
@@ -64,7 +57,7 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
         setTimescale={setTimescale}
         changeView={changeView}
       />
-     { view === 'recurring' ? <Chart measurements={recurringMeasurements} /> : <AverageChart measurements={averageMeasurements} />}
+     <Chart measurements={dataToShow} />
     </ChartWrapper>
   )
 }

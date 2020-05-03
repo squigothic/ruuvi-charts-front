@@ -12,8 +12,8 @@ const ChartData = styled.div`
 `
 
 const Chart = ({ measurements }) => {
-  const tempValues = measurements.map(measure => measure.temperature)
-  const humValues = measurements.map(measure => measure.humidity)
+  const tempValues = measurements.map(measure => parseFloat(measure.temperature))
+  const humValues = measurements.map(measure => parseFloat(measure.humidity))
   const timestamps = measurements.map(
     measure => measure.timestamp * 1000
   )
@@ -25,7 +25,8 @@ const Chart = ({ measurements }) => {
     humData.push([timestamps[i], humValues[i]])
   }
 
-
+  console.log('tempData: ', tempData)
+  console.log('humDAta; ', humData)
 
   const options = {
     title: null,
