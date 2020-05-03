@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Chart from './Chart'
+import AverageChart from './AverageChart'
 import ChartHeader from './chartheader/ChartHeader'
 
 const ChartWrapper = styled.div`
@@ -9,21 +10,31 @@ const ChartWrapper = styled.div`
     margin-top: 20px;
   }
 `
-const RuuviChart = ({ data, name }) => {
-  const [dataToShow, setDataToShow] = useState(data)
+const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
+  const [dataToShow, setDataToShow] = useState(recurringMeasurements)
+  const [view, setView] = useState('recurring')
   const [timeScale, setTimescale] = useState(24)
-  const averages = useSelector(state => state.measurements.average)
+  const averageMeasurements = useSelector(({ measurements }) => {
+    const datas = measurements.average.map(measurement => {
+      const data = JSON.parse(measurement.data)
+      data.date = measurement.date_tag.slice(0, 10)
+      return data
+    })
+    return datas.filter(m => m.friendlyname === tagFriendlyName)
+  })
 
   useEffect(() => {
-    setDataToShow(data)
-  }, [data])
+    setDataToShow(recurringMeasurements)
+  }, [recurringMeasurements])
 
   const changeView = selection => {
     console.log('handlataan klikkiä, view: ', selection)
     if (selection === 'recurring') {
-      setDataToShow(data)
+      setView('recurring')
+      setDataToShow(recurringMeasurements)
     } else {
-      setDataToShow(averages)
+      setView('averages')
+      setDataToShow(averageMeasurements)
     }
   }
 
@@ -40,21 +51,20 @@ const RuuviChart = ({ data, name }) => {
   }
 
   if (timeScale !== 24) {
-    const currentTime = new Date(data[data.length - 1].timestamp * 1000)
+    const currentTime = new Date(recurringMeasurements[recurringMeasurements.length - 1].timestamp * 1000)
     const beginTime = currentTime / 1000 - timeScale * 3600
-    data = data.filter(measurement => measurement.timestamp > beginTime)
+    recurringMeasurements = recurringMeasurements.filter(measurement => measurement.timestamp > beginTime)
   }
-  console.log('averages: ', averages)
 
   return (
     <ChartWrapper>
       <ChartHeader
-        name={name}
+        name={tagFriendlyName}
         data={calculateHeaderData(dataToShow)}
         setTimescale={setTimescale}
         changeView={changeView}
       />
-      <Chart measurements={data} />
+     { view === 'recurring' ? <Chart measurements={recurringMeasurements} /> : <AverageChart measurements={averageMeasurements} />}
     </ChartWrapper>
   )
 }
