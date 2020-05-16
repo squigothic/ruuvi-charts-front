@@ -55,8 +55,10 @@ const App = () => {
       ))
     }
   }
-
+  
   return (
+    <>
+    {!measurements ? null : 
     <PageWrapper>
       <Heading logout={doLogout} user={user?.username} />
       <Datedisplay currentTimeperiod={currentTimeperiod} />
@@ -64,6 +66,8 @@ const App = () => {
         {selectComponent(loading.status)}
       </MainContent>
     </PageWrapper >
+    }
+    </>
   )
 }
 

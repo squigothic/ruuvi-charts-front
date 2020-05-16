@@ -35,7 +35,6 @@ export const initializeMeasurements = user => {
       measurementService.setToken(token)
       const measurements = await measurementService.getLatestMeasurements(user)
       if (measurements.status !== 200) {
-        console.log(measurements.status)
         throw new Error('Something went wrong with the request')
       }
       console.log(measurements)
