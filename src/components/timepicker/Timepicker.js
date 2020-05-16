@@ -239,7 +239,7 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
 const mapStateToProps = state => {
   return {
     notification: state.notification,
-    measurements: state.measurements.data
+    measurements: state.measurements.recurring
   }
 }
 

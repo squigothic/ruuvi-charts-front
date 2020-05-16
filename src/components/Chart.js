@@ -25,8 +25,7 @@ const Chart = ({ measurements }) => {
     humData.push([timestamps[i], humValues[i]])
   }
 
-  console.log('tempData: ', tempData)
-  console.log('humDAta; ', humData)
+  
 
   const options = {
     title: null,
