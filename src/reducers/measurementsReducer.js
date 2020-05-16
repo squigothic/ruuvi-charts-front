@@ -4,7 +4,7 @@ import { logoutUser } from './userReducer'
 import { showNotification } from './notificationReducer'
 
 
-const initialState = { data: [] }
+const initialState = {}
 
 const measurementsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -34,6 +34,11 @@ export const initializeMeasurements = user => {
       } = getState()
       measurementService.setToken(token)
       const measurements = await measurementService.getLatestMeasurements(user)
+      if (measurements.status !== 200) {
+        console.log(measurements.status)
+        throw new Error('Something went wrong with the request')
+      }
+      console.log(measurements)
       dispatch({
         type: 'MEASUREMENTS_FETCH_SUCCESS',
         data: {
@@ -53,7 +58,6 @@ export const initializeMeasurements = user => {
     } catch (error) {
       dispatch(changeLoadingStatus('false', ''))
       console.log('response error')
-      console.log(error.response.status)
       dispatch(logoutUser())
       dispatch(showNotification('An error occurred, try logging in again', 4))
     }
