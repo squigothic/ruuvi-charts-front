@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {Title} from './ChartHeader'
 
 const ExtraInfoWrapper = styled.div`
   color: #4e4e4e;
@@ -16,11 +17,10 @@ const ExtraInfoWrapper = styled.div`
 
 const DataWrapper = styled.div`
   margin-left: 10px;
-  margin-right: 15px;
   display: flex;
   flex-direction: column;
+  min-width: 130px;
 `
-
 const HiliteNumber = styled.span`
   color: ${props => props.color};
   margin-right: 5px;
@@ -29,11 +29,7 @@ const DataItem = styled.div`
   
 `
 
-const Title = styled.h4`
-  font-size: 15px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-`
+
 
 const ExtraInfo = ({ data }) => {
   const formatTime = (timestamp) => {
@@ -48,13 +44,9 @@ const ExtraInfo = ({ data }) => {
 
   return (
   <ExtraInfoWrapper>
+    
     <DataWrapper>
-      <Title>Average</Title>
-      <HiliteNumber color="#e55977">{data.averageTemp} &deg;C</HiliteNumber>
-      <HiliteNumber color="#2d5e84">{data.averageHum} %</HiliteNumber>
-    </DataWrapper>
-    <DataWrapper>
-        <Title>Minimum</Title>
+        <Title size='14px'>Minimum</Title>
       <DataItem>
           <HiliteNumber color="#e55977">{data.lowestTemp} &deg;C</HiliteNumber> {formatTime(data.lowestTempTime)}
         </DataItem>
@@ -63,13 +55,18 @@ const ExtraInfo = ({ data }) => {
         </DataItem>
     </DataWrapper>
     <DataWrapper>
-        <Title>Maximum</Title>
+        <Title size='14px'>Maximum</Title>
            <DataItem>
           <HiliteNumber color="#e55977">{data.highestTemp} &deg;C</HiliteNumber> {formatTime(data.highestTempTime)}
         </DataItem>
         <DataItem>
           <HiliteNumber color="#2d5e84">{data.highestHum} %</HiliteNumber> {formatTime(data.highestHumTime)}
           </DataItem>
+      </DataWrapper>
+      <DataWrapper>
+      <Title size='14px'>Average</Title>
+      <HiliteNumber color="#e55977">{data.averageTemp} &deg;C</HiliteNumber>
+      <HiliteNumber color="#2d5e84">{data.averageHum} %</HiliteNumber>
     </DataWrapper>
 
     </ExtraInfoWrapper >

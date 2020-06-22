@@ -69,6 +69,15 @@ const ToggleButton = styled.div`
   line-height: 20px;
   font-family: helvetica;
 `
+export const Title = styled.h4`
+  font-size: ${props => props.size};
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: inline;
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+`
 
 const ChartHeader = ({
   name,
@@ -92,9 +101,9 @@ const ChartHeader = ({
       <ChartDataWrapper>
         <InfoLineWrapper>
           <LatestData>
-            Temperature:
+            <Title size='15px'>Temperature:</Title>
           <HiliteNumber color="#e55977">{data.latestTemp} &deg;C</HiliteNumber>
-            Humidity:
+            <Title size='15px'>Humidity:</Title>
           <HiliteNumber color="#2d5e84">{data.latestHum} %</HiliteNumber>
 
           </LatestData>
