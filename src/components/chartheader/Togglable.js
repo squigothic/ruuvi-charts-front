@@ -31,15 +31,14 @@ const DataItem = styled.div`
 
 
 
-const ExtraInfo = ({ data }) => {
+const ExtraInfo = ({ data, selectedView }) => {
   const formatTime = (timestamp) => {
     const date = new Date(timestamp * 1000)
-    console.log(date)
     const day = date.getDate()
     const month = date.getMonth() + 1
     const hour = ("0" + date.getHours()).slice(-2)
     const minute = ("0" + date.getMinutes()).slice(-2)
-    return day + '.' + month + '. ' + hour + ':' + minute 
+    return selectedView === 'recurring' ? day + '.' + month + '. ' + hour + ':' + minute : day + '.' + month + '.'
   }
 
   return (

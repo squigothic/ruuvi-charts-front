@@ -112,7 +112,7 @@ const ChartHeader = ({
           </ToggleButton>
         </InfoLineWrapper>
         {expanded && (
-          <ExtraInfo data={data} />
+          <ExtraInfo data={data} selectedView={selectedView} />
         )}
       </ChartDataWrapper>
       {selectedView === 'recurring' && <TimescaleSelector setTimescale={setTimescale} />}

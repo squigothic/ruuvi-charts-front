@@ -37,7 +37,7 @@ export const initializeMeasurements = user => {
       if (measurements.status !== 200) {
         throw new Error('Something went wrong with the request')
       }
-      console.log(measurements)
+      
       dispatch({
         type: 'MEASUREMENTS_FETCH_SUCCESS',
         data: {

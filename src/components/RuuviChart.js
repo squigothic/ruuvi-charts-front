@@ -13,7 +13,8 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
   const [timeScale, setTimescale] = useState(24)
   const [selectedView, setSelectedView] = useState('recurring')
   const averageMeasurements = useSelector(({ measurements }) => {
-    const datas = measurements.average.map(measurement => JSON.parse(measurement.data))
+    const datas = measurements.average.map(measurement =>
+      JSON.parse(measurement.data))
     return datas.filter(m => m.friendlyname === tagFriendlyName)
   })
 
@@ -34,10 +35,10 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }) => {
     const lowestHum = Math.min(...currentData.map(t => t.humidity))
     const highestTemp = Math.max(...currentData.map(t => t.temperature))
     const highestHum = Math.max(...currentData.map(t => t.humidity))
-    const lowestTempTime = currentData.find(t => t.temperature === lowestTemp).timestamp
-    const lowestHumTime = currentData.find(t => t.humidity === lowestHum).timestamp
-    const highestTempTime = currentData.find(t => t.temperature === highestTemp).timestamp
-    const highestHumTime = currentData.find(t => t.humidity === highestHum).timestamp
+    const lowestTempTime = currentData.find(t => Number(t.temperature) === lowestTemp).timestamp
+    const lowestHumTime = currentData.find(t => Number(t.humidity) === lowestHum).timestamp
+    const highestTempTime = currentData.find(t => Number(t.temperature) === highestTemp).timestamp
+    const highestHumTime = currentData.find(t => Number(t.humidity) === highestHum).timestamp
     return { averageTemp, averageHum, lowestHum, lowestTemp, highestHum, highestTemp, latestHum, latestTemp, lowestTempTime, lowestHumTime, highestTempTime, highestHumTime }
   }
 
