@@ -41,7 +41,7 @@ const LatestData = styled.div`
   font-family: helvetica;
   font-weight: 550;
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 13px;
   }  
   
 `
@@ -64,7 +64,6 @@ const HiliteNumber = styled.span`
 
 const ToggleButton = styled.div`
   font-size: 12px;
-  padding-left: 20px;
   display: inline-block;
   line-height: 20px;
   font-family: helvetica;
@@ -112,7 +111,7 @@ const ChartHeader = ({
           </ToggleButton>
         </InfoLineWrapper>
         {expanded && (
-          <ExtraInfo data={data} />
+          <ExtraInfo data={data} selectedView={selectedView} />
         )}
       </ChartDataWrapper>
       {selectedView === 'recurring' && <TimescaleSelector setTimescale={setTimescale} />}
