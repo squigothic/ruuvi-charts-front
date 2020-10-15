@@ -16,9 +16,9 @@ const GlobalStyle = createGlobalStyle`
 `
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store} >
     <GlobalStyle />
-    <App />
+    < App />
   </Provider>,
   document.getElementById('root')
 )
