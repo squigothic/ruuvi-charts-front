@@ -1,7 +1,10 @@
 export type RootState = {
   measurements: {
     recurring: Measurement[][],
-    currentTimeperiod: string;
+    currentTimeperiod: {
+      beginning: string;
+      end: string;
+    };
     average: Measurement[]
   },
   user: {

@@ -36,15 +36,22 @@ const CurrentTimePeriod = styled.span`
     font-size: 14px;
   } 
 `
+type Props = {
+  currentTimeperiod: {
+    beginning: string;
+    end: string;
+  };
+}
 
-const Datedisplay = ({ currentTimeperiod }) => {
+const Datedisplay = ({ currentTimeperiod }: Props) => {
   const [pickerVisible, setPickerVisible] = useState(false)
 
-  const formatTime = dateString => {
-    const date = new Date(dateString)
+  const formatTime = (dateString: string) => {
     if (!dateString) {
       return null
     }
+    const date = new Date(dateString)
+    
     // removed ${date.getHours()}:00
     return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)}`
   }
