@@ -71,8 +71,8 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
 
 
   useEffect(() => {
-    const beginningData = JSON.parse(measurements[0][0].data)
-    const endData = JSON.parse(measurements[0][measurements[0].length - 1].data)
+    const beginningData = measurements[0][0].data
+    const endData = measurements[0][measurements[0].length - 1].data
     const beginning = new Date(beginningData.timestamp * 1000)
     const end = new Date(endData.timestamp * 1000)
     setYear(String(beginning.getFullYear()).slice(2))

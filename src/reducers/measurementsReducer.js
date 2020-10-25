@@ -1,4 +1,4 @@
-import { setToken, getLatestMeasurements, getLatestAverages, getAverages } from '../services/measurements'
+import { setToken, getLatestMeasurements, getLatestAverages, getAverages, getTimeperiod } from '../services/measurements'
 import { changeLoadingStatus } from './loadingStateReducer'
 import { logoutUser } from './userReducer'
 import { showNotification } from './notificationReducer'
@@ -35,7 +35,6 @@ export const initializeMeasurements = user => {
       // TODO: Maybe use Promise.all to speed up requests
       setToken(token)
       const averages = await getLatestAverages(user)
-      console.log('ULULI *** ', averages)
       dispatch({
         type: 'AVERAGES_FETCH_SUCCESS',
         data: {
@@ -58,7 +57,6 @@ export const initializeMeasurements = user => {
       dispatch(changeLoadingStatus('false', ''))
     } catch (error) {
       dispatch(changeLoadingStatus('false', ''))
-      console.log('ERROR: ', error)
       console.log('response error')
       dispatch(logoutUser())
       dispatch(showNotification('An error occurred, try logging in again', 4))
@@ -72,7 +70,7 @@ export const getTimeperiodData = timeperiod => {
     const {
       user: { username },
     } = getState()
-    const measurements = await getTimeperiodData(
+    const measurements = await getTimeperiod(
       timeperiod,
       username
     )

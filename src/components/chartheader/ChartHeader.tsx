@@ -80,7 +80,7 @@ export const Title = styled.h4<{ size: string }>`
 type Props = {
   name: string;
   data: {
-    averageTemp:string;
+    averageTemp: string;
     averageHum: string;
     lowestHum: number;
     lowestTemp: number;

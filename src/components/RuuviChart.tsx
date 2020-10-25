@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { RootState, Measurement, MeasurementData } from '../types/types'
+import { RootState, MeasurementData } from '../types/types'
 import Chart from './Chart'
 import ChartHeader from './chartheader/ChartHeader'
 
@@ -22,8 +22,6 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }: Props) => {
     state.measurements.average.filter(m => m.data.friendlyname === tagFriendlyName).map(m => m.data)
   )
 
-  console.log('averageMEasurements: ',)
-
   const changeView = (selection: 'recurring' | 'average') => {
     if (selection === 'recurring') {
       setSelectedView('recurring')
@@ -31,7 +29,8 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }: Props) => {
       setSelectedView('average')
     }
   }
-
+  console.log('MOIKS CHARTEISTA!')
+  console.log('RECURRING MEASUREMENTS: ', recurringMeasurements)
   const calculateHeaderData = (currentData: MeasurementData[]) => {
     const latestTemp = currentData[currentData.length - 1].temperature
     const latestHum = currentData[currentData.length - 1].humidity

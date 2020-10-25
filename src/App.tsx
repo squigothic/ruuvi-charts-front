@@ -36,8 +36,6 @@ const App = () => {
   const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch])
   const doLogin = useCallback((user) => dispatch(loginUser(user)), [dispatch])
 
-  console.log('MEASUREMENTS: ', measurements);
-
   if (user === null) {
     if (loading.status === true) {
       return <Loading text={loading.message} />
@@ -45,33 +43,23 @@ const App = () => {
     return <Login login={doLogin} />
   }
 
-  const selectComponent = (loadingStatus: boolean) => {
-    console.log('loading status: ', loadingStatus)
-    if (loadingStatus === true) {
-      return <Loading text={loading.message} />
-    } else {
-      return measurements.map(tag => (
-        <RuuviChart
-          key={tag[0].data.friendlyname}
-          recurringMeasurements={tag.map(measurement => measurement.data)}
-          tagFriendlyName={tag[tag.length - 1].data.friendlyname}
-        />
-      ))
-    }
-  }
-
   return (
-    <>
-      {!measurements ? null :
-        <PageWrapper>
-          <Heading logout={doLogout} user={user?.username} />
+    <PageWrapper>
+      <Heading logout={doLogout} user={user?.username} />
+      {!measurements ? <Loading text={loading.message} /> :
+        <>
           <Datedisplay currentTimeperiod={currentTimeperiod} />
           <MainContent>
-            {selectComponent(loading.status)}
+            {measurements.map(tag => (
+              <RuuviChart
+                key={tag[0].data.friendlyname}
+                recurringMeasurements={tag.map(measurement => measurement.data)}
+                tagFriendlyName={tag[tag.length - 1].data.friendlyname}
+              />))}
           </MainContent>
-        </PageWrapper >
+        </>
       }
-    </>
+    </PageWrapper >
   )
 }
 
