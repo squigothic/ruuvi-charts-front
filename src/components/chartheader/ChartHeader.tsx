@@ -68,8 +68,8 @@ const ToggleButton = styled.div`
   line-height: 20px;
   font-family: helvetica;
 `
-export const Title = styled.h4`
-  font-size: ${props => props.size};
+export const Title = styled.h4<{ size: string }>`
+  font-size: ${({ size }) => size};
   margin-top: 0px;
   margin-bottom: 0px;
   display: inline;
@@ -77,6 +77,26 @@ export const Title = styled.h4`
     font-size: 13px;
   }
 `
+type Props = {
+  name: string;
+  data: {
+    averageTemp:string;
+    averageHum: string;
+    lowestHum: number;
+    lowestTemp: number;
+    highestHum: number;
+    highestTemp: number;
+    latestHum: number;
+    latestTemp: number;
+    lowestTempTime: string | undefined;
+    lowestHumTime: string | undefined;
+    highestTempTime: string | undefined;
+    highestHumTime: string | undefined;
+  };
+  setTimescale: React.Dispatch<React.SetStateAction<number>>;
+  changeView: (selection: 'recurring' | 'average') => void;
+  selectedView: 'recurring' | 'average'
+}
 
 const ChartHeader = ({
   name,
@@ -84,7 +104,7 @@ const ChartHeader = ({
   setTimescale,
   changeView,
   selectedView
-}) => {
+}: Props) => {
   const [expanded, setExpanded] = useState(false)
 
   const handleClick = () => {
@@ -94,16 +114,16 @@ const ChartHeader = ({
   return (
     <ChartHeaderWrapper>
       <TitleRowWrapper>
-      <ChartTitle>{name}</ChartTitle>
-      <ChartSelectionTabs changeView={changeView} />
+        <ChartTitle>{name}</ChartTitle>
+        <ChartSelectionTabs changeView={changeView} />
       </TitleRowWrapper>
       <ChartDataWrapper>
         <InfoLineWrapper>
           <LatestData>
             <Title size='15px'>Temperature:</Title>
-          <HiliteNumber color="#e55977">{data.latestTemp} &deg;C</HiliteNumber>
+            <HiliteNumber color="#e55977">{data.latestTemp} &deg;C</HiliteNumber>
             <Title size='15px'>Humidity:</Title>
-          <HiliteNumber color="#2d5e84">{data.latestHum} %</HiliteNumber>
+            <HiliteNumber color="#2d5e84">{data.latestHum} %</HiliteNumber>
 
           </LatestData>
           <ToggleButton onClick={handleClick}>
