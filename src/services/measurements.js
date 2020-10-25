@@ -1,14 +1,16 @@
 import axios from 'axios'
 
-const measurementsBaseUrl = 'https://nameless-river-83647.herokuapp.com/measurements'
+// const measurementsBaseUrl = 'https://nameless-river-83647.herokuapp.com/measurements'
+const measurementsBaseUrl = 'https://dry-ocean-51491.herokuapp.com/measurements'
+
 
 let token = null
 
-const setToken = newToken => {
+export const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
-const getTimeperiod = async (timePeriod, user) => {
+export const getTimeperiod = async (timePeriod, user) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -17,7 +19,7 @@ const getTimeperiod = async (timePeriod, user) => {
   return response
 }
 
-const getAverages = async (timePeriod, user) => {
+export const getAverages = async (timePeriod, user) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -26,7 +28,7 @@ const getAverages = async (timePeriod, user) => {
   return response
 }
 
-const getLatestMeasurements = async user => {
+export const getLatestMeasurements = async user => {
   const config = {
     headers: { Authorization: token },
   }
@@ -35,14 +37,12 @@ const getLatestMeasurements = async user => {
   return response
 }
 
-const getLatestAverages = async user => {
+export const getLatestAverages = async user => {
   const config = {
     headers: { Authorization: token },
   }
-
+  console.log('GETTING AVERAGES *****')
 
   const response = await axios.get(`${measurementsBaseUrl}/${user}/averages`, config)
   return response
 }
-
-export default { getLatestMeasurements, setToken, getTimeperiod, getAverages, getLatestAverages }

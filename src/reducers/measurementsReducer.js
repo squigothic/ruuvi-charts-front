@@ -1,4 +1,4 @@
-import measurementService from '../services/measurements'
+import { setToken, getLatestMeasurements, getLatestAverages, getAverages } from '../services/measurements'
 import { changeLoadingStatus } from './loadingStateReducer'
 import { logoutUser } from './userReducer'
 import { showNotification } from './notificationReducer'
@@ -32,20 +32,10 @@ export const initializeMeasurements = user => {
       const {
         user: { token },
       } = getState()
-      measurementService.setToken(token)
-      const measurements = await measurementService.getLatestMeasurements(user)
-      if (measurements.status !== 200) {
-        throw new Error('Something went wrong with the request')
-      }
-      
-      dispatch({
-        type: 'MEASUREMENTS_FETCH_SUCCESS',
-        data: {
-          measurements: measurements.data,
-          timeperiod: 'Last 24 hours',
-        },
-      })
-      const averages = await measurementService.getLatestAverages(user)
+      // TODO: Maybe use Promise.all to speed up requests
+      setToken(token)
+      const averages = await getLatestAverages(user)
+      console.log('ULULI *** ', averages)
       dispatch({
         type: 'AVERAGES_FETCH_SUCCESS',
         data: {
@@ -53,9 +43,22 @@ export const initializeMeasurements = user => {
           timeperiod: 'Last 24 hours'
         },
       })
+      const measurements = await getLatestMeasurements(user)
+      if (measurements.status !== 200) {
+        throw new Error('Something went wrong with the request')
+      }
+
+      dispatch({
+        type: 'MEASUREMENTS_FETCH_SUCCESS',
+        data: {
+          measurements: measurements.data,
+          timeperiod: 'Last 24 hours',
+        },
+      })
       dispatch(changeLoadingStatus('false', ''))
     } catch (error) {
       dispatch(changeLoadingStatus('false', ''))
+      console.log('ERROR: ', error)
       console.log('response error')
       dispatch(logoutUser())
       dispatch(showNotification('An error occurred, try logging in again', 4))
@@ -63,13 +66,13 @@ export const initializeMeasurements = user => {
   }
 }
 
-export const getTimeperiod = timeperiod => {
+export const getTimeperiodData = timeperiod => {
   return async (dispatch, getState) => {
     dispatch(changeLoadingStatus('true', 'Loading measurements...'))
     const {
       user: { username },
     } = getState()
-    const measurements = await measurementService.getTimeperiod(
+    const measurements = await getTimeperiodData(
       timeperiod,
       username
     )
@@ -90,7 +93,7 @@ export const getAverageForTimeperiod = timeperiod => {
     const {
       user: { username },
     } = getState()
-    const averages = await measurementService.getAverages(timeperiod, username)
+    const averages = await getAverages(timeperiod, username)
     dispatch({
       type: 'AVERAGES_FETCH_SUCCESS',
       data: {

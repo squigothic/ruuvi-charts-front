@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import Notification from '../Notification'
-import { getTimeperiod } from '../../reducers/measurementsReducer'
+import { getTimeperiodData } from '../../reducers/measurementsReducer'
 import { showNotification } from '../../reducers/notificationReducer'
 
 const Wrapper = styled.div`
@@ -244,7 +244,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  getTimeperiod,
+  getTimeperiod: getTimeperiodData,
   showNotification,
 }
 

@@ -10,6 +10,7 @@ const loadingStateReducer = (state = initialState, action) => {
 }
 
 export const changeLoadingStatus = (status, message) => {
+  console.log('changing loading status... ', status)
   return {
     type: 'CHANGE_STATE',
     data: {
