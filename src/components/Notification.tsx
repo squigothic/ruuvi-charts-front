@@ -11,7 +11,7 @@ const NotificationContainer = styled.div`
   margin-bottom: 5px;
 `
 
-const Notification = ({ message }) => {
+const Notification = ({ message }: { message: string }) => {
   if (message === null) {
     return null
   }

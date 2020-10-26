@@ -29,8 +29,6 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }: Props) => {
       setSelectedView('average')
     }
   }
-  console.log('MOIKS CHARTEISTA!')
-  console.log('RECURRING MEASUREMENTS: ', recurringMeasurements)
   const calculateHeaderData = (currentData: MeasurementData[]) => {
     const latestTemp = currentData[currentData.length - 1].temperature
     const latestHum = currentData[currentData.length - 1].humidity

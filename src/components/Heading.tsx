@@ -55,8 +55,15 @@ const UserInfo = styled.div`
     margin-right: 8px;
   }  
 `
+type Props = {
+  logout: () => {
+    type: string;
+    data: null;
+  }
+  user: string;
+}
 
-const Heading = ({ logout, user }) => {
+const Heading = ({ logout, user }: Props) => {
   return (
     <HeaderContainer>
       <ContentWrapper>

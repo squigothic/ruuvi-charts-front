@@ -16,8 +16,11 @@ const LoadingText = styled.h2`
     font-size: 16px;
   }
 `
+type Props = {
+  text: string;
+}
 
-const Loading = ({ text }) => {
+const Loading = ({ text }: Props) => {
   return (
     <AnimationWrapper>
       <LoadingText>{text}</LoadingText>

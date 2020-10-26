@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Notification from '../Notification'
 import { getTimeperiodData } from '../../reducers/measurementsReducer'
 import { showNotification } from '../../reducers/notificationReducer'
+import { RootState } from '../../types/types'
+
 
 const Wrapper = styled.div`
   position: absolute;
@@ -59,7 +61,11 @@ const SubmitButton = styled.button`
   margin-top: 10px;
 `
 
-const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, measurements }) => {
+type Props = {
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Timepicker = ({ toggle }: Props) => {
   const [year, setYear] = useState('')
   const [day, setDay] = useState('')
   const [month, setMonth] = useState('')
@@ -69,23 +75,29 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
   const [endmonth, setMonthEnd] = useState('')
   const [endhour, setHourEnd] = useState('')
 
+  const notification = useSelector((state: RootState) => state.notification)
+  const measurements = useSelector((state: RootState) => state.measurements.recurring)
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     const beginningData = measurements[0][0].data
     const endData = measurements[0][measurements[0].length - 1].data
-    const beginning = new Date(beginningData.timestamp * 1000)
-    const end = new Date(endData.timestamp * 1000)
+    const beginning = new Date(Number(beginningData.timestamp) * 1000)
+    console.log(beginning.getMonth())
+    const end = new Date(Number(endData.timestamp) * 1000)
+    console.log(end)
     setYear(String(beginning.getFullYear()).slice(2))
-    setMonth(beginning.getMonth() + 1)
-    setDay(beginning.getDate())
-    setHour(beginning.getHours())
+    setMonth(String(beginning.getMonth() + 1))
+    setDay(String(beginning.getDate()))
+    setHour(String(beginning.getHours()))
     setYearEnd(String(end.getFullYear()).slice(2))
-    setMonthEnd(end.getMonth() + 1)
-    setDayEnd(end.getDate())
-    setHourEnd(end.getHours())
+    setMonthEnd(String(end.getMonth() + 1))
+    setDayEnd(String(end.getDate()))
+    setHourEnd(String(end.getHours()))
   }, [measurements])
 
-  const checkDateValidity = (beginning, end) => {
+  const checkDateValidity = (beginning: string, end: string) => {
     if (
       beginning.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})/) &&
       end.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})/)
@@ -99,14 +111,15 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
     const offset = (new Date().getTimezoneOffset() / 60).toString()
     const sign = offset.charAt(0) === '-' ? '+' : '-'
     const hours = sign === '-' ? offset : offset.slice(1)
-    const timezone = offset > 9 ? `${sign}${hours}:00` : `${sign}0${hours}:00`
+    const timezone = Number(offset) > 9 ? `${sign}${hours}:00` : `${sign}0${hours}:00`
     return timezone
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formYear = String(year.length) > 2 ? String(year).slice(2) : year
+    const formYear = String(year).length > 2 ? String(year).slice(2) : year
     const formMonth = String(month).length < 2 ? `0${month}` : month
+    console.log(formMonth)
     const formDay = String(day).length < 2 ? `0${day}` : day
     const formHour = String(hour).length < 2 ? `0${hour}` : hour
     const formEndYear = String(endyear).length > 2 ? String(endyear).slice(2) : endyear
@@ -117,25 +130,25 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
     const beginning = `20${formYear}-${formMonth}-${formDay}T${formHour}:00:00${getAndformatTimezone()}`
     const end = `20${formEndYear}-${formEndMonth}-${formEndDay}T${formEndHour}:00:00${getAndformatTimezone()}`
     if (!checkDateValidity(beginning, end)) {
-      showNotification('Date(s) malformed', 4)
+      dispatch(showNotification('Date(s) malformed', 4))
       return
     }
     if (new Date(beginning) > new Date(end)) {
-      showNotification('Beginning is later than end', 4)
+      dispatch(showNotification('Beginning is later than end', 4))
       return
     }
     const timeperiod = {
       beginning,
       end,
     }
-    getTimeperiod(timeperiod)
-    toggle()
+    dispatch(getTimeperiodData(timeperiod))
+    toggle(false)
   }
 
   return (
     <Wrapper>
       <Title>Start</Title>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <FlexWrapper>
           <StarDateWrapper>
             <InputWrapper>
@@ -236,18 +249,6 @@ const Timepicker = ({ getTimeperiod, showNotification, notification, toggle, mea
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    notification: state.notification,
-    measurements: state.measurements.recurring
-  }
-}
-
-const mapDispatchToProps = {
-  getTimeperiod: getTimeperiodData,
-  showNotification,
-}
 
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Timepicker)
+export default Timepicker

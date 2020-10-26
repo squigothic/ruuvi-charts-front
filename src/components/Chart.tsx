@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import { MeasurementData } from '../types/types'
 
 require('highcharts/modules/exporting')(Highcharts)
 require('highcharts/modules/export-data')(Highcharts)
@@ -10,12 +11,15 @@ require('highcharts/modules/data')(Highcharts)
 
 const ChartData = styled.div`
 `
+type Props = {
+  measurements: MeasurementData[];
+}
 
-const Chart = ({ measurements }) => {
-  const tempValues = measurements.map(measure => parseFloat(measure.temperature))
-  const humValues = measurements.map(measure => parseFloat(measure.humidity))
+const Chart = ({ measurements }: Props) => {
+  const tempValues = measurements.map(measure => measure.temperature)
+  const humValues = measurements.map(measure => measure.humidity)
   const timestamps = measurements.map(
-    measure => measure.timestamp * 1000
+    measure => Number.parseInt(measure.timestamp) * 1000
   )
 
   const tempData = []

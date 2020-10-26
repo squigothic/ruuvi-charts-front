@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import Notification from './Notification'
 import { useSelector } from 'react-redux'
+import { ThunkAction } from 'redux-thunk'
+import { UserReducerAction } from '../reducers/userReducer'
+import { RootState, LoadingStateReducerAction } from '../types/types'
 
 const Wrapper = styled.div`
   background: lightgray;
@@ -33,13 +36,16 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 18px;
 `
+type Props = {
+  login: (user: any) => ThunkAction<void, RootState, unknown, UserReducerAction | LoadingStateReducerAction>;
+}
 
-const Login = ({ login }) => {
+const Login = ({ login }: Props) => {
   const [newUser, setNewUser] = useState('')
   const [password, setPassword] = useState('')
-  const notification = useSelector(state => state.notification)
+  const notification = useSelector((state: RootState) => state.notification)
 
-  const submitUser = event => {
+  const submitUser = (event: React.FormEvent<HTMLInputElement>) => {
     console.log('event: ', newUser, ' ', password)
     event.preventDefault()
     login({
@@ -50,7 +56,7 @@ const Login = ({ login }) => {
     setPassword('')
   }
 
-  const handleFormChange = event => {
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
       case 'username':
         setNewUser(event.target.value)
@@ -69,7 +75,7 @@ const Login = ({ login }) => {
         <Notification message={notification.content} />
       )}
       <LoginBox>
-        <form onSubmit={submitUser}>
+        <form onSubmit={() => submitUser}>
           <InputDescription>Username</InputDescription>
           <input
             type="text"

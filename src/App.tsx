@@ -46,7 +46,7 @@ const App = () => {
   return (
     <PageWrapper>
       <Heading logout={doLogout} user={user?.username} />
-      {!measurements ? <Loading text={loading.message} /> :
+      {!measurements || loading.status ? <Loading text={loading.message} /> :
         <>
           <Datedisplay currentTimeperiod={currentTimeperiod} />
           <MainContent>
