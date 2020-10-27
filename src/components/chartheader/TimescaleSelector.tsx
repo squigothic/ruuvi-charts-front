@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   width: 75px;
   justify-content: space-between;
 `
-const TimescaleSelector = ({ setTimescale }) => {
+const TimescaleSelector = ({ setTimescale }: { setTimescale: React.Dispatch<React.SetStateAction<number>>}) => {
   const scales = [24, 12, 2]
   const [selected, setSelected] = useState(24)
   return (

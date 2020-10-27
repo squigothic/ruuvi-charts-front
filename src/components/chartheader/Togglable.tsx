@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ChartHeaderData } from '../../types/types'
 import {Title} from './ChartHeader'
 
 const ExtraInfoWrapper = styled.div`
@@ -28,12 +29,15 @@ const HiliteNumber = styled.span`
 const DataItem = styled.div`
   
 `
+type Props = {
+  data: ChartHeaderData;
+  selectedView: "recurring" | "average";
+}
 
 
-
-const ExtraInfo = ({ data, selectedView }) => {
-  const formatTime = (timestamp) => {
-    const date = new Date(timestamp * 1000)
+const ExtraInfo = ({ data, selectedView }: Props) => {
+  const formatTime = (timestamp: string | undefined) => {
+    const date = new Date(Number(timestamp) * 1000)
     const day = date.getDate()
     const month = date.getMonth() + 1
     const hour = ("0" + date.getHours()).slice(-2)

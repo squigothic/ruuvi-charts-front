@@ -12,6 +12,21 @@ export type RootState = {
   },
 }
 
+export type ChartHeaderData = {
+  averageTemp: string;
+  averageHum: string;
+  lowestHum: number;
+  lowestTemp: number;
+  highestHum: number;
+  highestTemp: number;
+  latestHum: number;
+  latestTemp: number;
+  lowestTempTime: string | undefined;
+  lowestHumTime: string | undefined;
+  highestTempTime: string | undefined;
+  highestHumTime: string | undefined;
+}
+
 export type NotificationState = {
   content: string;
   status: boolean;

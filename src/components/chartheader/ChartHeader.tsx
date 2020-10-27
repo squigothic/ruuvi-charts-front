@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ExtraInfo from './Togglable'
 import TimescaleSelector from './TimescaleSelector'
 import ChartSelectionTabs from './ChartSelectionTabs'
+import { ChartHeaderData } from '../../types/types'
 
 const ChartHeaderWrapper = styled.div`
   padding: 0.1em 0em;
@@ -79,20 +80,7 @@ export const Title = styled.h4<{ size: string }>`
 `
 type Props = {
   name: string;
-  data: {
-    averageTemp: string;
-    averageHum: string;
-    lowestHum: number;
-    lowestTemp: number;
-    highestHum: number;
-    highestTemp: number;
-    latestHum: number;
-    latestTemp: number;
-    lowestTempTime: string | undefined;
-    lowestHumTime: string | undefined;
-    highestTempTime: string | undefined;
-    highestHumTime: string | undefined;
-  };
+  data: ChartHeaderData;
   setTimescale: React.Dispatch<React.SetStateAction<number>>;
   changeView: (selection: 'recurring' | 'average') => void;
   selectedView: 'recurring' | 'average'

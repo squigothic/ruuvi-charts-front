@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-const Tab = styled.div`
+const Tab = styled.div<{background: boolean}>`
   height: 100%;
   padding: 0 10px 0 10px;
   font-family: helvetica;
@@ -20,10 +20,10 @@ const Tab = styled.div`
   background-color: ${props => props.background ? '#e8ecef': '#d7dce0'};
 `
 
-const ChartSelectionTabs = ({ changeView }) => {
+const ChartSelectionTabs = ({ changeView } :{ changeView: (selection: 'recurring' | 'average') => void}) => {
   const [selectedTab, setSelectedTab] = useState('recurring')
   
-  const handleClick = selection  => {
+  const handleClick = (selection: 'recurring' | 'average')  => {
     setSelectedTab(selection)
     changeView(selection)
   }

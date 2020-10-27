@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ selected: boolean }>`
   height: 17px;
   background-color: ${props => (props.selected ? '#E8ECEF' : 'transparent')};
 `
@@ -23,8 +23,14 @@ const ScaleButton = styled.button`
   width: 20px;
   height: 15px;
 `
+type Props = {
+  setTimescale: React.Dispatch<React.SetStateAction<number>>;
+  scale: number;
+  selected: boolean;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const TimescaleButton = ({ setTimescale, scale, selected, setSelected }) => {
+const TimescaleButton = ({ setTimescale, scale, selected, setSelected }: Props) => {
   const handleSelect = () => {
     setTimescale(scale)
     setSelected(scale)
