@@ -189,6 +189,8 @@ const Timepicker = ({ toggle }: Props) => {
               <InputField
                 type="number"
                 name="starthour"
+                min="0"
+                max="23"
                 value={hour}
                 onChange={event => setHour(event.target.value)}
               />
@@ -234,6 +236,8 @@ const Timepicker = ({ toggle }: Props) => {
               <InputField
                 type="number"
                 name="hour"
+                min="0"
+                max="23"
                 value={endhour}
                 onChange={event => setHourEnd(event.target.value)}
               />

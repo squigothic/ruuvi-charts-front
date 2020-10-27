@@ -53,7 +53,7 @@ const Datedisplay = ({ currentTimeperiod }: Props) => {
     const date = new Date(dateString)
     
     // removed ${date.getHours()}:00
-    return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)}`
+    return `${date.getDate()}.${date.getMonth() + 1}.${String(date.getFullYear()).slice(2)} ${date.getHours()}:00`
   }
 
   return (
