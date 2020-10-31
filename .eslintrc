@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "env": {
+    "es2020": true,
+    "browser": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint", "import"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    "prettier/react",
+    "eslint-config-prettier",
+    "plugin:prettier/recommended" // This will display prettier errors as ESLint errors. Make sure this is always the last configuration.
+  ],
+  "ignorePatterns": ["dist/", "coverage/", "test/"],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "import/extensions": [0, "never"],
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "camelcase": ["error", {"allow": ["timestamp_tag"]}],
+    "consistent-return": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "no-console": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

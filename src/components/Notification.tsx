@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const NotificationContainer = styled.div`
   color: red;
@@ -9,14 +9,14 @@ const NotificationContainer = styled.div`
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 5px;
-`
+`;
 
 const Notification = ({ message }: { message: string }) => {
   if (message === null) {
-    return null
+    return null;
   }
 
-  return <NotificationContainer>{message}</NotificationContainer>
-}
+  return <NotificationContainer>{message}</NotificationContainer>;
+};
 
-export default Notification
+export default Notification;
