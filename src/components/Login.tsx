@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
-import { useSelector } from 'react-redux';
-import { ThunkAction } from 'redux-thunk';
+import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
-import { UserReducerAction } from '../reducers/userReducer';
-import { RootState, LoadingStateReducerAction } from '../types/types';
+import { loginUser } from '../reducers/userReducer';
+import { RootState } from '../types/types';
 
 const Wrapper = styled.div`
   background: lightgray;
@@ -34,24 +32,21 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 18px;
 `;
-type Props = {
-  login: (
-    user: any
-  ) => ThunkAction<void, RootState, unknown, UserReducerAction | LoadingStateReducerAction>;
-};
 
-const Login = ({ login }: Props) => {
+const Login = () => {
   const [newUser, setNewUser] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const notification = useSelector((state: RootState) => state.notification);
 
-  const submitUser = (event: React.FormEvent<HTMLInputElement>) => {
-    console.log('event: ', newUser, ' ', password);
+  const submitUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login({
-      username: newUser.toLowerCase(),
-      password,
-    });
+    dispatch(
+      loginUser({
+        username: newUser.toLowerCase(),
+        password,
+      })
+    );
     setNewUser('');
     setPassword('');
   };
@@ -73,7 +68,7 @@ const Login = ({ login }: Props) => {
     <Wrapper>
       {notification.status === true && <Notification message={notification.content} />}
       <LoginBox>
-        <form onSubmit={() => submitUser}>
+        <form onSubmit={(event) => submitUser(event)}>
           <InputDescription>Username</InputDescription>
           <input
             type="text"

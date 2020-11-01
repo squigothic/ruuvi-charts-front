@@ -23,9 +23,10 @@ const userReducer = (state = null, action: UserReducerAction) => {
   }
 };
 
-export const loginUser = (
-  credentials: User
-): ThunkAction<void, RootState, unknown, UserReducerAction | LoadingStateReducerAction> => {
+export const loginUser = (credentials: {
+  username: string;
+  password: string;
+}): ThunkAction<void, RootState, unknown, UserReducerAction | LoadingStateReducerAction> => {
   return async (dispatch) => {
     try {
       dispatch(changeLoadingStatus(true, 'Logging in...'));

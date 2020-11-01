@@ -6,7 +6,7 @@ import Heading from './components/Heading';
 import Loading from './components/Loading';
 import Login from './components/Login';
 import Datedisplay from './components/timepicker/Datedisplay';
-import { loginUser, logoutUser, setUser } from './reducers/userReducer';
+import { logoutUser, setUser } from './reducers/userReducer';
 import { RootState } from './types/types';
 
 const PageWrapper = styled.div``;
@@ -35,13 +35,12 @@ const App = () => {
   }, [dispatch]);
 
   const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch]);
-  const doLogin = useCallback(() => dispatch(loginUser(user)), [dispatch]);
 
   if (user === null) {
     if (loading.status === true) {
       return <Loading text={loading.message} />;
     }
-    return <Login login={doLogin} />;
+    return <Login />;
   }
 
   return (
