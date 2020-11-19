@@ -1,26 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
-  background: #E8ECEF;
+  background: #e8ecef;
   border-bottom: 1px solid black;
   line-height: 60px;
-`
+`;
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   @media (max-width: 768px) {
     width: 100%;
   }
-`
+`;
 const UpperRowWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
-`
+`;
 
 const Title = styled.h2`
   color: #274262;
@@ -30,13 +30,13 @@ const Title = styled.h2`
   font-family: 'Helvetica', sans-serif;
   @media (max-width: 768px) {
     font-size: 24px;
-  }  
-`
+  }
+`;
 
 const UserMetaWrapper = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const LogoutButton = styled.button`
   height: 23px;
@@ -44,7 +44,7 @@ const LogoutButton = styled.button`
   border: 2px solid #274262;
   border-radius: 3px;
   color: #274262;
-`
+`;
 
 const UserInfo = styled.div`
   margin-right: 15px;
@@ -53,23 +53,32 @@ const UserInfo = styled.div`
   @media (max-width: 768px) {
     font-size: 14px;
     margin-right: 8px;
-  }  
-`
+  }
+`;
+type Props = {
+  logout: () => {
+    type: string;
+    data: null;
+  };
+  user: string;
+};
 
-const Heading = ({ logout, user }) => {
+const Heading = ({ logout, user }: Props) => {
   return (
     <HeaderContainer>
       <ContentWrapper>
         <UpperRowWrapper>
           <Title>Ruuvifrontend</Title>
-          {user && (<UserMetaWrapper>
-            <UserInfo>Logged in as {user}</UserInfo>
-            <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
-          </UserMetaWrapper>)}
+          {user && (
+            <UserMetaWrapper>
+              <UserInfo>Logged in as {user}</UserInfo>
+              <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
+            </UserMetaWrapper>
+          )}
         </UpperRowWrapper>
       </ContentWrapper>
     </HeaderContainer>
-  )
-}
+  );
+};
 
-export default Heading
+export default Heading;
