@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Timeperiod } from '../types/types';
-import baseUrl from '../apiConfig';
+import apiConfig from '../apiConfig';
 
 let token: string;
 
-const measurementsBaseUrl = `${baseUrl}/measurements`;
+const measurementsBaseUrl = `${apiConfig.baseUrl}/measurements`;
 
 export const setToken = (newToken: string) => {
   token = `Bearer ${newToken}`;
