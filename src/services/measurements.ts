@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Timeperiod } from '../types/types';
-
-const measurementsBaseUrl = 'https://nameless-river-83647.herokuapp.com/measurements';
-// const measurementsBaseUrl = 'https://dry-ocean-51491.herokuapp.com/measurements';
+import baseUrl from '../apiConfig';
 
 let token: string;
+
+const measurementsBaseUrl = `${baseUrl}/measurements`;
 
 export const setToken = (newToken: string) => {
   token = `Bearer ${newToken}`;
