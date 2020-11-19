@@ -1,13 +1,10 @@
 {
     "workbench.colorCustomizations": {
       "tab.unfocusedActiveBorder": "#fff0"
-<<<<<<< HEAD
     },
     "editor.formatOnSave": true, // auto format the file on each save
      "[javascript, typescript]": {
         "editor.formatOnSave": false
-=======
->>>>>>> master
     },
     "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
     "eslint.alwaysShowStatus": true,
