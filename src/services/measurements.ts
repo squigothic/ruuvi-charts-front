@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Timeperiod } from '../types/types';
 
-// const measurementsBaseUrl = 'https://nameless-river-83647.herokuapp.com/measurements'
-const measurementsBaseUrl = 'https://dry-ocean-51491.herokuapp.com/measurements';
+const measurementsBaseUrl = 'https://nameless-river-83647.herokuapp.com/measurements';
+// const measurementsBaseUrl = 'https://dry-ocean-51491.herokuapp.com/measurements';
 
 let token: string;
 
