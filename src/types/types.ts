@@ -64,3 +64,11 @@ export type LoadingStateReducerAction = {
     message: string;
   };
 };
+
+export type ErrorReporter = {
+  debug: (error: Error) => void;
+  info: (error: Error) => void;
+  warning: (error: Error) => void;
+  error: (error: Error) => void;
+  critical: (error: Error) => void;
+};

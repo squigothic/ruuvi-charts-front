@@ -20,7 +20,7 @@ const MainContent = styled.div`
   }
 `;
 
-const App = () => {
+const App = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
   const measurements = useSelector((state: RootState) => state.measurements.recurring);
   const currentTimeperiod = useSelector((state: RootState) => state.measurements.currentTimeperiod);
@@ -35,6 +35,10 @@ const App = () => {
   }, [dispatch]);
 
   const doLogout = useCallback(() => dispatch(logoutUser()), [dispatch]);
+
+  if (children) {
+    return <div>{children}</div>;
+  }
 
   if (user === null) {
     if (loading.status === true) {
