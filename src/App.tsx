@@ -25,7 +25,7 @@ const App = ({ children }: { children: JSX.Element }) => {
   return (
     <PageWrapper>
       <Heading logout={doLogout} user={user?.username} />
-      {children || <Loading text={loading.message} />}
+      {loading.status ? <Loading text={loading.message} /> : children}
     </PageWrapper>
   );
 };

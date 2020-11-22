@@ -32,7 +32,6 @@ export const loginUser = (credentials: {
         data: user,
       });
       window.localStorage.setItem('user', JSON.stringify(user));
-      console.log('yriteätän repleissata...');
       history.replace('/');
     } catch (error) {
       dispatch(changeLoadingStatus(false, ''));
@@ -44,7 +43,6 @@ export const loginUser = (credentials: {
 };
 
 export const logoutUser = (): { type: string; data: null } => {
-  console.log('logataan ulos');
   window.localStorage.clear();
   history.replace('/login');
   return {
