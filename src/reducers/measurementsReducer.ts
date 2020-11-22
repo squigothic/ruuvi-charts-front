@@ -1,4 +1,4 @@
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import {
   setToken,
   getLatestMeasurements,
@@ -7,24 +7,23 @@ import {
   getTimeperiod,
 } from '../services/measurements';
 import { changeLoadingStatus } from './loadingStateReducer';
-import { logoutUser, UserReducerAction } from './userReducer';
+import { logoutUser } from './userReducer';
 import { showNotification } from './notificationReducer';
-import { Measurement, RootState, Timeperiod, LoadingStateReducerAction } from '../types/types';
+import {
+  MeasurementsReducerAction,
+  UserReducerAction,
+  RootState,
+  Timeperiod,
+  LoadingStateReducerAction,
+} from '../types';
 
-const initialState = {};
-
-export type MeasurementsReducerAction = {
-  type: string;
-  data: {
-    measurements?: Measurement[][];
-    averages?: Measurement[];
-    timeperiod:
-      | {
-          beginning: string;
-          end: string;
-        }
-      | string;
-  };
+const initialState = {
+  recurring: [],
+  currentTimeperiod: {
+    beginning: '',
+    end: '',
+  },
+  average: [],
 };
 
 const measurementsReducer = (state = initialState, action: MeasurementsReducerAction) => {
@@ -46,8 +45,22 @@ const measurementsReducer = (state = initialState, action: MeasurementsReducerAc
   }
 };
 
+const handleMeasurementsActionError = (
+  dispatch: ThunkDispatch<
+    RootState,
+    unknown,
+    MeasurementsReducerAction | LoadingStateReducerAction | UserReducerAction
+  >,
+  error: any
+) => {
+  dispatch(changeLoadingStatus(false, ''));
+  console.log('response error', error);
+  dispatch(logoutUser());
+  dispatch(showNotification('An error occurred, try logging in again', 4));
+};
+
 export const initializeMeasurements = (
-  user: string
+  username: string
 ): ThunkAction<
   void,
   RootState,
@@ -55,60 +68,76 @@ export const initializeMeasurements = (
   MeasurementsReducerAction | LoadingStateReducerAction | UserReducerAction
 > => {
   return async (dispatch, getState) => {
+    console.log('NYT SIELLLÄ PERKELEEN MEASUREMENTS REDUCERISSA');
     try {
       dispatch(changeLoadingStatus(true, 'Loading measurements...'));
+
       const {
         user: { token },
       } = getState();
-      // TODO: Maybe use Promise.all to speed up requests
       setToken(token);
-      const averages = await getLatestAverages(user);
-      dispatch({
-        type: 'AVERAGES_FETCH_SUCCESS',
-        data: {
-          averages: averages.data,
-          timeperiod: 'Last 24 hours',
-        },
-      });
-      const measurements = await getLatestMeasurements(user);
-      if (measurements.status !== 200) {
+      console.log('user: ', username);
+
+      const [recurringMeasurements, averageMeasurements] = await Promise.all([
+        getLatestMeasurements(username),
+        getLatestAverages(username),
+      ]);
+
+      if (recurringMeasurements.status !== 200 || averageMeasurements.status !== 200) {
         throw new Error('Something went wrong with the request');
       }
-
       dispatch({
         type: 'MEASUREMENTS_FETCH_SUCCESS',
         data: {
-          measurements: measurements.data,
+          measurements: recurringMeasurements.data,
+          timeperiod: 'Last 24 hours',
+        },
+      });
+      dispatch({
+        type: 'AVERAGES_FETCH_SUCCESS',
+        data: {
+          averages: averageMeasurements.data,
           timeperiod: 'Last 24 hours',
         },
       });
       dispatch(changeLoadingStatus(false, ''));
+      return Promise.resolve();
     } catch (error) {
-      dispatch(changeLoadingStatus(false, ''));
-      console.log('response error');
-      dispatch(logoutUser());
-      dispatch(showNotification('An error occurred, try logging in again', 4));
+      handleMeasurementsActionError(dispatch, error);
+      return Promise.reject();
     }
   };
 };
 
 export const getTimeperiodData = (
   timeperiod: Timeperiod
-): ThunkAction<void, RootState, unknown, MeasurementsReducerAction | LoadingStateReducerAction> => {
+): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  MeasurementsReducerAction | LoadingStateReducerAction | UserReducerAction
+> => {
   return async (dispatch, getState) => {
     dispatch(changeLoadingStatus(true, 'Loading measurements...'));
     const {
       user: { username },
     } = getState();
-    const measurements = await getTimeperiod(timeperiod, username);
-    dispatch({
-      type: 'MEASUREMENTS_FETCH_SUCCESS',
-      data: {
-        measurements: measurements.data,
-        timeperiod,
-      },
-    });
-    dispatch(changeLoadingStatus(false, ''));
+    try {
+      const measurements = await getTimeperiod(timeperiod, username);
+      if (measurements.status !== 200) {
+        throw new Error('Something went wrong with the request');
+      }
+      dispatch({
+        type: 'MEASUREMENTS_FETCH_SUCCESS',
+        data: {
+          measurements: measurements.data,
+          timeperiod,
+        },
+      });
+      dispatch(changeLoadingStatus(false, ''));
+    } catch (error) {
+      handleMeasurementsActionError(dispatch, error);
+    }
   };
 };
 
@@ -120,15 +149,22 @@ export const getAverageForTimeperiod = (
     const {
       user: { username },
     } = getState();
-    const averages = await getAverages(timeperiod, username);
-    dispatch({
-      type: 'AVERAGES_FETCH_SUCCESS',
-      data: {
-        averages: averages.data,
-        timeperiod,
-      },
-    });
-    dispatch(changeLoadingStatus(false, ''));
+    try {
+      const averages = await getAverages(timeperiod, username);
+      if (averages.status !== 200) {
+        throw new Error('Something went wrong with the request');
+      }
+      dispatch({
+        type: 'AVERAGES_FETCH_SUCCESS',
+        data: {
+          averages: averages.data,
+          timeperiod,
+        },
+      });
+      dispatch(changeLoadingStatus(false, ''));
+    } catch (error) {
+      handleMeasurementsActionError(dispatch, error);
+    }
   };
 };
 

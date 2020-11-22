@@ -1,14 +1,9 @@
 import { ThunkAction } from 'redux-thunk';
-import { initializeMeasurements } from './measurementsReducer';
 import login from '../services/loginservice';
 import { changeLoadingStatus } from './loadingStateReducer';
 import { showNotification } from './notificationReducer';
-import { LoadingStateReducerAction, RootState, User } from '../types/types';
-
-export type UserReducerAction = {
-  type: string;
-  data: User | null;
-};
+import { LoadingStateReducerAction, UserReducerAction, RootState, User } from '../types';
+import history from '../utils';
 
 const userReducer = (state = null, action: UserReducerAction) => {
   switch (action.type) {
@@ -37,7 +32,8 @@ export const loginUser = (credentials: {
         data: user,
       });
       window.localStorage.setItem('user', JSON.stringify(user));
-      dispatch(initializeMeasurements(user.username));
+      console.log('yriteätän repleissata...');
+      history.replace('/');
     } catch (error) {
       dispatch(changeLoadingStatus(false, ''));
       console.log('response error');
@@ -50,24 +46,17 @@ export const loginUser = (credentials: {
 export const logoutUser = (): { type: string; data: null } => {
   console.log('logataan ulos');
   window.localStorage.clear();
+  history.replace('/login');
   return {
     type: 'LOGOUT_USER',
     data: null,
   };
 };
 
-export const setUser = (user: User): ThunkAction<void, RootState, unknown, UserReducerAction> => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_USER',
-      data: user,
-    });
-
-    try {
-      dispatch(initializeMeasurements(user.username));
-    } catch (error) {
-      console.log('error: ', error);
-    }
+export const setUser = (user: User): { type: string; data: User } => {
+  return {
+    type: 'SET_USER',
+    data: user,
   };
 };
 

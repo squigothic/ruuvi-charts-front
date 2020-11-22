@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import Notification from './Notification';
-import { loginUser } from '../reducers/userReducer';
-import { RootState } from '../types/types';
+import Notification from '../Notification';
+import { loginUser } from '../../reducers/userReducer';
+import { RootState } from '../../types';
 
 const Wrapper = styled.div`
   background: lightgray;

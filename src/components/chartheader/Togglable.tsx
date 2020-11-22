@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChartHeaderData } from '../../types/types';
+import { ChartHeaderData } from '../../types';
 import { Title } from './ChartHeader';
 
 const ExtraInfoWrapper = styled.div`

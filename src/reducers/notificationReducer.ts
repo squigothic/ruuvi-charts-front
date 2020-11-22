@@ -1,16 +1,9 @@
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../types/types';
+import { RootState, NotificationReducerAction } from '../types';
 
 const initialState = {
   content: '',
   status: false,
-};
-export type NotificationReducerAction = {
-  type: string;
-  data: {
-    content: string;
-    status: boolean;
-  };
 };
 
 const notificationReducer = (state = initialState, action: NotificationReducerAction) => {

@@ -1,4 +1,4 @@
-import { LoadingStateReducerAction } from '../types/types';
+import { LoadingStateReducerAction } from '../types';
 
 const initialState = { status: false, message: '' };
 

@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import { createBrowserHistory, Location } from 'history';
+import { Location } from 'history';
+import history from './utils/index';
 
 import App from './App';
 import store from './store';
 import routes from './routes/routes';
 import createRouter from './routes/router';
+import { setUser } from './reducers/userReducer';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -18,12 +20,27 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const history = createBrowserHistory();
+const getUserFromLocalStorage = () => {
+  const savedUser = window.localStorage.getItem('user');
+  if (savedUser) {
+    store.dispatch(setUser(JSON.parse(savedUser)));
+    return JSON.parse(savedUser);
+  }
+  return null;
+};
 
-const router = createRouter(routes);
+const router = createRouter(routes, store);
 
 const renderPage = async (location: Location) => {
-  const route = await router.resolve(history.location);
+  const { pathname } = location;
+  const loggedInUser = await getUserFromLocalStorage();
+  console.log('loggedin user: ', loggedInUser);
+  if (!loggedInUser && history.location.pathname !== '/login') {
+    history.replace('/login');
+    return;
+  }
+  console.log('history location ', history.location);
+  const route = await router.resolve({ pathname, loggedInUser });
   console.log('ROUTE: ', route);
   ReactDOM.render(
     <Provider store={store}>
@@ -34,8 +51,7 @@ const renderPage = async (location: Location) => {
   );
 };
 
-history.listen(({ location, action }) => {
-  console.log('Locationaction: ', action);
+history.listen(({ location }) => {
   renderPage(location);
 });
 
