@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ExtraInfo from './Togglable';
 import TimescaleSelector from './TimescaleSelector';
 import ChartSelectionTabs from './ChartSelectionTabs';
-import { ChartHeaderData } from '../../types/types';
+import { ChartHeaderData } from '../../types';
 
 const ChartHeaderWrapper = styled.div`
   padding: 0.1em 0em;

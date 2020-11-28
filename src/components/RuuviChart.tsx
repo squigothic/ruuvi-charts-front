@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState, MeasurementData } from '../types/types';
+import { RootState, MeasurementData } from '../types';
 import Chart from './Chart';
 import ChartHeader from './chartheader/ChartHeader';
 

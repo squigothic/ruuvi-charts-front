@@ -1,4 +1,4 @@
-import { LoadingStateReducerAction } from '../types/types';
+import { LoadingStateReducerAction } from '../types';
 
 const initialState = { status: false, message: '' };
 
@@ -12,7 +12,6 @@ const loadingStateReducer = (state = initialState, action: LoadingStateReducerAc
 };
 
 export const changeLoadingStatus = (status: boolean, message: string) => {
-  console.log('changing loading status... ', status);
   return {
     type: 'CHANGE_STATE',
     data: {

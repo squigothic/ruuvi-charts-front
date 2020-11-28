@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Notification from '../Notification';
 import { getTimeperiodData } from '../../reducers/measurementsReducer';
 import { showNotification } from '../../reducers/notificationReducer';
-import { RootState } from '../../types/types';
+import { RootState } from '../../types';
 
 const Wrapper = styled.div`
   position: absolute;

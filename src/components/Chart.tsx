@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { MeasurementData } from '../types/types';
+import { MeasurementData } from '../types';
 
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);

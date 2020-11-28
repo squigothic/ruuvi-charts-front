@@ -1,3 +1,5 @@
+import { Store } from 'redux';
+
 export type User = {
   username: string;
   token: string;
@@ -64,3 +66,38 @@ export type LoadingStateReducerAction = {
     message: string;
   };
 };
+
+export type UserReducerAction = {
+  type: string;
+  data: User | null;
+};
+
+export type MeasurementsReducerAction = {
+  type: string;
+  data: {
+    measurements?: Measurement[][];
+    averages?: Measurement[];
+    timeperiod:
+      | {
+          beginning: string;
+          end: string;
+        }
+      | string;
+  };
+};
+
+export type NotificationReducerAction = {
+  type: string;
+  data: {
+    content: string;
+    status: boolean;
+  };
+};
+
+export type AppState = Store<
+  RootState,
+  | LoadingStateReducerAction
+  | UserReducerAction
+  | MeasurementsReducerAction
+  | NotificationReducerAction
+>;
