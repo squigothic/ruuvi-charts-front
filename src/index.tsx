@@ -34,14 +34,11 @@ const router = createRouter(routes, store);
 const renderPage = async (location: Location) => {
   const { pathname } = location;
   const loggedInUser = await getUserFromLocalStorage();
-  console.log('loggedin user: ', loggedInUser);
   if (!loggedInUser && history.location.pathname !== '/login') {
     history.replace('/login');
     return;
   }
-  console.log('history location ', history.location);
   const route = await router.resolve({ pathname, loggedInUser });
-  console.log('ROUTE: ', route);
   ReactDOM.render(
     <Provider store={store}>
       <GlobalStyle />

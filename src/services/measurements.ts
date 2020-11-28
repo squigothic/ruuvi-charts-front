@@ -45,7 +45,6 @@ export const getLatestAverages = async (username: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  console.log('GETTING AVERAGES *****');
 
   const response = await axios.get(`${measurementsBaseUrl}/${username}/averages`, config);
   return response;

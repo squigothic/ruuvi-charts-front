@@ -35,8 +35,7 @@ export const loginUser = (credentials: {
       history.replace('/');
     } catch (error) {
       dispatch(changeLoadingStatus(false, ''));
-      console.log('response error');
-      console.log(error.response.status);
+      console.log('response error', error.response.status);
       dispatch(showNotification('Wrong username or password', 4));
     }
   };

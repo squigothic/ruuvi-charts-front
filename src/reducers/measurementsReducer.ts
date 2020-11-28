@@ -68,7 +68,6 @@ export const initializeMeasurements = (
   MeasurementsReducerAction | LoadingStateReducerAction | UserReducerAction
 > => {
   return async (dispatch, getState) => {
-    console.log('NYT SIELLLÄ PERKELEEN MEASUREMENTS REDUCERISSA');
     try {
       dispatch(changeLoadingStatus(true, 'Loading measurements...'));
 
@@ -76,7 +75,6 @@ export const initializeMeasurements = (
         user: { token },
       } = getState();
       setToken(token);
-      console.log('user: ', username);
 
       const [recurringMeasurements, averageMeasurements] = await Promise.all([
         getLatestMeasurements(username),
