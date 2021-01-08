@@ -5,7 +5,7 @@ import {
   getLatestAverages,
   getAverages,
   getTimeperiod,
-} from '../services/measurements';
+} from '../services/measurementService';
 import { changeLoadingStatus } from './loadingStateReducer';
 import { logoutUser } from './userReducer';
 import { showNotification } from './notificationReducer';

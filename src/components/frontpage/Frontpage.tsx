@@ -14,7 +14,7 @@ const MainContent = styled.div`
   }
 `;
 
-const App = () => {
+const Frontpage = () => {
   const measurements = useSelector((state: RootState) => state.measurements.recurring);
   const currentTimeperiod = useSelector((state: RootState) => state.measurements.currentTimeperiod);
 
@@ -34,4 +34,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Frontpage;
