@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import login from '../services/loginService';
+import login from '../services/loginservice';
 import { changeLoadingStatus } from './loadingStateReducer';
 import { showNotification } from './notificationReducer';
 import { LoadingStateReducerAction, UserReducerAction, RootState, User } from '../types';

@@ -25,21 +25,6 @@ export type Measurement = {
   dateOfMeasurement: string;
 };
 
-export type Alert = {
-  activated: boolean;
-  triggered: boolean;
-  value: number;
-};
-
-export type TagData = {
-  tagName: string;
-  mac: string;
-  friendlyName: string;
-  englishName: string;
-  high: Alert;
-  low: Alert;
-};
-
 export type NotificationState = {
   content: string;
   status: boolean;
@@ -57,7 +42,6 @@ export type RootState = {
     status: boolean;
     message: string;
   };
-  tags: TagData[];
 };
 
 export type ChartHeaderData = {
@@ -110,16 +94,10 @@ export type NotificationReducerAction = {
   };
 };
 
-export type TagReducerAction = {
-  type: string;
-  data: TagData[] | TagData;
-};
-
 export type AppState = Store<
   RootState,
   | LoadingStateReducerAction
   | UserReducerAction
   | MeasurementsReducerAction
   | NotificationReducerAction
-  | TagReducerAction
 >;

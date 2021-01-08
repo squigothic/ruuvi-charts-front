@@ -1,14 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import history from '../utils/index';
 
 const HeaderContainer = styled.div`
   background: #e8ecef;
   border-bottom: 1px solid black;
   line-height: 60px;
-  @media (max-width: 768px) {
-    line-height: 35px;
-  }
 `;
 
 const ContentWrapper = styled.div`
@@ -24,10 +20,6 @@ const UpperRowWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 `;
 
 const Title = styled.h2`
@@ -46,16 +38,16 @@ const UserMetaWrapper = styled.div`
   align-items: center;
 `;
 
-const HeaderButton = styled.button`
+const LogoutButton = styled.button`
   height: 23px;
   background: white;
   border: 2px solid #274262;
   border-radius: 3px;
   color: #274262;
-  margin-left: 10px;
 `;
 
 const UserInfo = styled.div`
+  margin-right: 15px;
   font-family: 'Helvetica', sans-serif;
   color: #274262;
   @media (max-width: 768px) {
@@ -63,11 +55,6 @@ const UserInfo = styled.div`
     margin-right: 8px;
   }
 `;
-
-const LinkWrapper = styled.a`
-  text-decoration: none;
-`;
-
 type Props = {
   logout: () => {
     type: string;
@@ -81,14 +68,11 @@ const Heading = ({ logout, user }: Props) => {
     <HeaderContainer>
       <ContentWrapper>
         <UpperRowWrapper>
-          <LinkWrapper href="/">
-            <Title>Ruuvifrontend</Title>
-          </LinkWrapper>
+          <Title>Ruuvifrontend</Title>
           {user && (
             <UserMetaWrapper>
               <UserInfo>Logged in as {user}</UserInfo>
-              <HeaderButton onClick={() => logout()}>Logout</HeaderButton>
-              <HeaderButton onClick={() => history.push('/settings')}>Settings</HeaderButton>
+              <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
             </UserMetaWrapper>
           )}
         </UpperRowWrapper>
