@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const getUserFromLocalStorage = () => {
+const getUserFromLocalStorage = async () => {
   const savedUser = window.localStorage.getItem('user');
   if (savedUser) {
     store.dispatch(setUser(JSON.parse(savedUser)));
