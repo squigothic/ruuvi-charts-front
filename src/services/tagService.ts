@@ -19,7 +19,7 @@ export const setToken = (newToken: string) => {
 
 export const getTags = async (username: string) => {
   const response = await axios.get(`${tagsBaseUrl}/${username}`, config);
-  return response;
+  return response.data;
 };
 
 export const updateTag = async (username: string, tag: TagData) => {
@@ -28,7 +28,7 @@ export const updateTag = async (username: string, tag: TagData) => {
     url: `${tagsBaseUrl}/${username}`,
     data: tag,
   });
-  return response;
+  return response.data;
 };
 
 export const addTag = async (username: string, tag: TagData) => {
@@ -37,5 +37,5 @@ export const addTag = async (username: string, tag: TagData) => {
     url: `${tagsBaseUrl}/${username}`,
     data: tag,
   });
-  return response;
+  return response.data;
 };
