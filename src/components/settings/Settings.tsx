@@ -5,10 +5,7 @@ import { RootState, TagData } from '../../types';
 import Loading from '../Loading';
 import Tag from './Tag';
 
-const Wrapper = styled.div`
-  width: 80%;
-  background-color: cyan;
-`;
+const Wrapper = styled.div``;
 
 const Title = styled.h1`
   color: #274262;
@@ -19,6 +16,24 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 24px;
   }
+`;
+
+const Headers = styled.div`
+  display: flex;
+  font-weight: bold;
+  border-bottom: 2px solid #274262;
+`;
+
+const Name = styled.div`
+  min-width: 100px;
+`;
+
+const Mac = styled.div`
+  min-width: 160px;
+`;
+
+const TheRest = styled.div`
+  width: 100px;
 `;
 
 const Settings = () => {
@@ -32,6 +47,14 @@ const Settings = () => {
         <Loading text="Loading tags" />
       ) : (
         <>
+          <Headers>
+            <Name>Name</Name>
+            <Mac>Mac</Mac>
+            <TheRest>Lower limit</TheRest>
+            <TheRest>Active</TheRest>
+            <TheRest>Upper limit</TheRest>
+            <TheRest>Active</TheRest>
+          </Headers>
           {tags.map((tag) => (
             <Tag key={tag.tagName} tag={tag} />
           ))}
