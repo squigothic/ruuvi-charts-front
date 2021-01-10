@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import history from '../utils/index';
+import Button from './common/Button';
 
 const HeaderContainer = styled.div`
   background: #e8ecef;
@@ -46,15 +47,6 @@ const UserMetaWrapper = styled.div`
   align-items: center;
 `;
 
-const HeaderButton = styled.button`
-  height: 23px;
-  background: white;
-  border: 2px solid #274262;
-  border-radius: 3px;
-  color: #274262;
-  margin-left: 10px;
-`;
-
 const UserInfo = styled.div`
   font-family: 'Helvetica', sans-serif;
   color: #274262;
@@ -87,8 +79,8 @@ const Heading = ({ logout, user }: Props) => {
           {user && (
             <UserMetaWrapper>
               <UserInfo>Logged in as {user}</UserInfo>
-              <HeaderButton onClick={() => logout()}>Logout</HeaderButton>
-              <HeaderButton onClick={() => history.push('/settings')}>Settings</HeaderButton>
+              <Button onClick={() => logout()}>Logout</Button>
+              <Button onClick={() => history.push('/settings')}>Settings</Button>
             </UserMetaWrapper>
           )}
         </UpperRowWrapper>

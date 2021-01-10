@@ -21,6 +21,7 @@ const Title = styled.h1`
 const Headers = styled.div`
   display: flex;
   font-weight: bold;
+  padding-bottom: 3px;
   border-bottom: 2px solid #274262;
 `;
 
