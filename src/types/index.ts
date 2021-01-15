@@ -112,7 +112,7 @@ export type NotificationReducerAction = {
 
 export type TagReducerAction = {
   type: string;
-  data: TagData[] | TagData;
+  data: TagData[];
 };
 
 export type AppState = Store<

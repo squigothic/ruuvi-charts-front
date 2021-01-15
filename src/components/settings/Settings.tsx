@@ -5,14 +5,15 @@ import { RootState, TagData } from '../../types';
 import Loading from '../Loading';
 import Tag from './Tag';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  font-family: 'Helvetica', sans-serif;
+`;
 
 const Title = styled.h1`
   color: #274262;
   font-size: 40px;
   margin-top: 0;
   margin-bottom: 0;
-  font-family: 'Helvetica', sans-serif;
   @media (max-width: 768px) {
     font-size: 24px;
   }
@@ -23,10 +24,13 @@ const Headers = styled.div`
   font-weight: bold;
   padding-bottom: 3px;
   border-bottom: 2px solid #274262;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Name = styled.div`
-  min-width: 100px;
+  min-width: 120px;
 `;
 
 const Mac = styled.div`
@@ -39,7 +43,6 @@ const TheRest = styled.div`
 
 const Settings = () => {
   const tags: TagData[] = useSelector((state: RootState) => state.tags);
-  console.log(tags);
 
   return (
     <Wrapper>
@@ -53,7 +56,7 @@ const Settings = () => {
             <Mac>Mac</Mac>
             <TheRest>Lower limit</TheRest>
             <TheRest>Active</TheRest>
-            <TheRest>Upper limit</TheRest>
+            <TheRest>Higher limit</TheRest>
             <TheRest>Active</TheRest>
           </Headers>
           {tags.map((tag) => (

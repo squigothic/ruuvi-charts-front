@@ -1,5 +1,5 @@
 import axios from 'axios';
-import apiConfig from '../apiConfig';
+// import apiConfig from '../apiConfig';
 import { TagData } from '../types';
 
 let config:
@@ -8,7 +8,8 @@ let config:
     }
   | {};
 
-const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
+// const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
+const tagsBaseUrl = 'http://localhost:8080/tags';
 
 export const setToken = (newToken: string) => {
   const token = `Bearer ${newToken}`;
@@ -22,12 +23,8 @@ export const getTags = async (username: string) => {
   return response.data;
 };
 
-export const updateTag = async (username: string, tag: TagData) => {
-  const response = await axios({
-    method: 'put',
-    url: `${tagsBaseUrl}/${username}`,
-    data: tag,
-  });
+export const updateTag = async (username: string, tag: TagData, tagName: String) => {
+  const response = await axios.post(`${tagsBaseUrl}/${username}/${tagName}`, tag, config);
   return response.data;
 };
 
