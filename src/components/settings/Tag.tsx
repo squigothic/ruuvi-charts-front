@@ -223,6 +223,9 @@ const Tag = ({ tag }: { tag: TagData }) => {
             />
             <Button type="submit">Save</Button>
           </UpdateForm>
+          <Button type="button" onClick={() => setIsEditable(false)}>
+            Cancel
+          </Button>
         </>
       )}
     </Wrapper>
