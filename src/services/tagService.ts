@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import apiConfig from '../apiConfig';
+import apiConfig from '../apiConfig';
 import { TagData } from '../types';
 
 let config:
@@ -8,8 +8,7 @@ let config:
     }
   | {};
 
-// const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
-const tagsBaseUrl = 'http://localhost:8080/tags';
+const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
 
 export const setToken = (newToken: string) => {
   const token = `Bearer ${newToken}`;
