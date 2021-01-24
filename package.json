@@ -65,6 +65,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,tsx,ts}": [
+      "npm run lint-fix",
       "npm run lint"
     ]
   }

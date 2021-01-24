@@ -29,3 +29,4 @@ deploy.sh
 now.json
 /.now
 .eslintcache
+.eslintcache
