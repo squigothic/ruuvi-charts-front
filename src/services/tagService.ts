@@ -1,15 +1,16 @@
 import axios from 'axios';
-// import apiConfig from '../apiConfig';
+import apiConfig from '../apiConfig';
 import { TagData } from '../types';
 
-let config:
+type Config =
   | {
       headers: { Authorization: string };
     }
   | {};
 
-// const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
-const tagsBaseUrl = 'http://localhost:8080/tags';
+let config: Config;
+
+const tagsBaseUrl = `${apiConfig.baseUrl}/tags`;
 
 export const setToken = (newToken: string) => {
   const token = `Bearer ${newToken}`;
@@ -29,10 +30,6 @@ export const updateTag = async (username: string, tag: TagData, tagName: String)
 };
 
 export const addTag = async (username: string, tag: TagData) => {
-  const response = await axios({
-    method: 'post',
-    url: `${tagsBaseUrl}/${username}`,
-    data: tag,
-  });
+  const response = await axios.post(`${tagsBaseUrl}/${username}`, tag, config);
   return response.data;
 };

@@ -79,7 +79,13 @@ const Heading = ({ logout, user }: Props) => {
           {user && (
             <UserMetaWrapper>
               <UserInfo>Logged in as {user}</UserInfo>
-              <Button onClick={() => logout()}>Logout</Button>
+              <Button
+                onClick={() => {
+                  history.push('/logout');
+                }}
+              >
+                Logout
+              </Button>
               <Button onClick={() => history.push('/settings')}>Settings</Button>
             </UserMetaWrapper>
           )}

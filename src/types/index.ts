@@ -26,9 +26,9 @@ export type Measurement = {
 };
 
 export type Alert = {
-  activated: boolean;
-  triggered: boolean;
-  value: number;
+  activated: boolean | undefined;
+  triggered: boolean | undefined;
+  value: number | undefined;
 };
 
 export type TagData = {
@@ -36,8 +36,8 @@ export type TagData = {
   mac: string;
   friendlyName: string;
   englishName: string;
-  high: Alert;
-  low: Alert;
+  high: Alert | undefined;
+  low: Alert | undefined;
 };
 
 export type NotificationState = {
