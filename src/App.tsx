@@ -6,7 +6,14 @@ import Loading from './components/Loading';
 import { logoutUser, setUser } from './reducers/userReducer';
 import { RootState } from './types';
 
-const PageWrapper = styled.div``;
+const PageWrapper = styled.div`
+  width: 90%;
+  margin: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
 
 const App = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();

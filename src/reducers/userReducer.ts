@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import login from '../services/loginservice';
+import login from '../services/loginService';
 import { changeLoadingStatus } from './loadingStateReducer';
 import { showNotification } from './notificationReducer';
 import { LoadingStateReducerAction, UserReducerAction, RootState, User } from '../types';
@@ -12,6 +12,7 @@ const userReducer = (state = null, action: UserReducerAction) => {
     case 'SET_USER':
       return action.data;
     case 'LOGOUT_USER':
+      console.log('tässä laitan käyttäjän arvon nulliksi');
       return null;
     default:
       return state;
@@ -43,7 +44,7 @@ export const loginUser = (credentials: {
 
 export const logoutUser = (): { type: string; data: null } => {
   window.localStorage.clear();
-  history.replace('/login');
+  history.push('/login');
   return {
     type: 'LOGOUT_USER',
     data: null,

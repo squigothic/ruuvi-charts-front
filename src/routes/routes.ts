@@ -1,6 +1,7 @@
 import frontpage from './frontpage';
 import settings from './settings';
 import login from './login';
+import logout from './logout';
 
 export default [
   {
@@ -17,5 +18,10 @@ export default [
     path: '/login',
     name: 'Login',
     action: login,
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    action: logout,
   },
 ];

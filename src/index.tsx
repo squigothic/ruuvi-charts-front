@@ -34,6 +34,7 @@ const router = createRouter(routes, store);
 const renderPage = async (location: Location) => {
   const { pathname } = location;
   const loggedInUser = await getUserFromLocalStorage();
+  console.log('sisäänkirjautunut käyttäjä ', loggedInUser);
   if (!loggedInUser && history.location.pathname !== '/login') {
     history.replace('/login');
     return;
