@@ -49,8 +49,9 @@ const RuuviChart = ({ recurringMeasurements, tagFriendlyName }: Props) => {
     const highestHum = Math.max(...currentData.map((t) => t.humidity));
     const lowestTempTime = currentData.find((t) => Number(t.temperature) === lowestTemp)?.timestamp;
     const lowestHumTime = currentData.find((t) => Number(t.humidity) === lowestHum)?.timestamp;
-    const highestTempTime = currentData.find((t) => Number(t.temperature) === highestTemp)
-      ?.timestamp;
+    const highestTempTime = currentData.find(
+      (t) => Number(t.temperature) === highestTemp
+    )?.timestamp;
     const highestHumTime = currentData.find((t) => Number(t.humidity) === highestHum)?.timestamp;
     return {
       averageTemp,
