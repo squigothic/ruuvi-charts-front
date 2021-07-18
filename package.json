@@ -10,7 +10,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/styled-components": "^5.1.7",
     "axios": "^0.21.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^3.4.1",
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "history": "^5.0.0",
@@ -42,8 +42,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@typescript-eslint/parser": "^4.15.2",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.2.0",
